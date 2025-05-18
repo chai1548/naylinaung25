@@ -90,6 +90,29 @@
             font-size: 14px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
+        .search-results {
+            position: absolute;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 400px;
+            max-height: 300px;
+            overflow-y: auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 10;
+            display: none;
+        }
+        .result-item {
+            padding: 10px 15px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+        }
+        .result-item:hover {
+            background-color: #f5f5f5;
+        }
     </style>
 </head>
 <body>
@@ -104,6 +127,9 @@
             </div>
         </div>
     </div>
+
+    <!-- Search Results Dropdown -->
+    <div id="search-results" class="search-results"></div>
 
     <!-- Categories -->
     <div class="category-container">
@@ -182,11 +208,82 @@
     </div>
 
     <script>
+        // City data from our previous conversation
+        const myanmarCities = [
+            {"country": "myanmar", "place": "Pathein", "code": "10010", "place_mm": "ပုသိမ်", "place_th": "ผะอิน", "lat": 16.7793, "lng": 94.7321},
+            {"country": "myanmar", "place": "Sittwe", "code": "18000", "place_mm": "စစ်တွေ", "place_th": "สิตตวี", "lat": 20.1527, "lng": 92.8727},
+            {"country": "myanmar", "place": "Taunggyi", "code": "06000", "place_mm": "တောင်ကြီး", "place_th": "ตองยี", "lat": 20.7893, "lng": 97.0378},
+            {"country": "myanmar", "place": "Myitkyina", "code": "01000", "place_mm": "မြစ်ကြီးနား", "place_th": "มิตจีนา", "lat": 25.3833, "lng": 97.3959},
+            {"country": "myanmar", "place": "Hakha", "code": "02000", "place_mm": "ဟားခါး", "place_th": "ฮาคา", "lat": 22.6500, "lng": 93.6167},
+            {"country": "myanmar", "place": "Loikaw", "code": "09000", "place_mm": "လွိုင်ကော်", "place_th": "โลยก่อ", "lat": 19.6790, "lng": 97.2107},
+            {"country": "myanmar", "place": "Dawei", "code": "14000", "place_mm": "ထားဝယ်", "place_th": "ทวาย", "lat": 14.0823, "lng": 98.1926},
+            {"country": "myanmar", "place": "Hpa-An", "code": "13000", "place_mm": "ဘားအံ", "place_th": "พะอัน", "lat": 16.8949, "lng": 97.6217},
+            {"country": "myanmar", "place": "Magway", "code": "04000", "place_mm": "မကွေး", "place_th": "มาเกว", "lat": 20.1494, "lng": 94.9513},
+            {"country": "myanmar", "place": "Sagaing", "code": "03000", "place_mm": "စစ်ကိုင်း", "place_th": "สะกาย", "lat": 21.8787, "lng": 95.9797},
+            {"country": "myanmar", "place": "Pyay", "code": "08080", "place_mm": "ပြည်", "place_th": "แปร", "lat": 18.8243, "lng": 95.2210},
+            {"country": "myanmar", "place": "Myawaddy", "code": "07000", "place_mm": "မြဝတီ", "place_th": "เมียวดี", "lat": 16.6866, "lng": 98.5091},
+            {"country": "myanmar", "place": "Tachileik", "code": "06500", "place_mm": "တာချီလိတ်", "place_th": "ท่าขี้เหล็ก", "lat": 20.4475, "lng": 99.8808},
+            {"country": "myanmar", "place": "Muse", "code": "06100", "place_mm": "မူဆယ်", "place_th": "เมืองสาด", "lat": 23.9920, "lng": 97.9088},
+            {"country": "myanmar", "place": "Kawthaung", "code": "14010", "place_mm": "ကော့သောင်း", "place_th": "กอธอง", "lat": 10.0492, "lng": 98.5367},
+            {"country": "myanmar", "place": "Lashio", "code": "06020", "place_mm": "လားရှိုး", "place_th": "ลาซิโอ", "lat": 22.9359, "lng": 97.7498},
+            {"country": "myanmar", "place": "Yangon", "code": "11000", "place_mm": "ရန်ကုန်", "place_th": "ย่างกุ้ง", "lat": 16.8409, "lng": 96.1735},
+            {"country": "myanmar", "place": "Mandalay", "code": "05000", "place_mm": "မန္တလေး", "place_th": "มัณฑะเลย์", "lat": 21.9588, "lng": 96.0891},
+            {"country": "myanmar", "place": "Naypyidaw", "code": "15000", "place_mm": "နေပြည်တော်", "place_th": "เนปิดอว์", "lat": 19.7633, "lng": 96.0785},
+            {"country": "myanmar", "place": "Mawlamyine", "code": "12000", "place_mm": "မော်လမြိုင်", "place_th": "มะละแหม่ง", "lat": 16.4802, "lng": 97.6229},
+            {"country": "myanmar", "place": "Bago", "code": "11000", "place_mm": "ပဲခူး", "place_th": "พะโค", "lat": 17.3358, "lng": 96.4818},
+            {"country": "myanmar", "place": "Monywa", "code": "05010", "place_mm": "မုံရွာ", "place_th": "มอนยวา", "lat": 22.1086, "lng": 95.1426},
+            {"country": "myanmar", "place": "Kalay", "code": "06010", "place_mm": "ကလေး", "place_th": "กะเล", "lat": 23.1887, "lng": 94.0519},
+            {"country": "myanmar", "place": "Pyin Oo Lwin", "code": "05020", "place_mm": "ပြင်ဦးလွင်", "place_th": "ปิ่นอุลิน", "lat": 22.0350, "lng": 96.4568},
+            {"country": "myanmar", "place": "Meiktila", "code": "04010", "place_mm": "မိတ္ထီလာ", "place_th": "เมกติลา", "lat": 20.8735, "lng": 95.8577},
+            {"country": "myanmar", "place": "Pakokku", "code": "04020", "place_mm": "ပခုက္ကူ", "place_th": "ปะโคคู", "lat": 21.3299, "lng": 95.0856},
+            {"country": "myanmar", "place": "Shwebo", "code": "03010", "place_mm": "ရွှေဘို", "place_th": "ชเวโบ", "lat": 22.5693, "lng": 95.6982},
+            {"country": "myanmar", "place": "Thanlyin", "code": "11020", "place_mm": "သန်လျင်", "place_th": "ธันลยิน", "lat": 16.7333, "lng": 96.2500},
+            {"country": "myanmar", "place": "Mudon", "code": "12010", "place_mm": "မုဒုံ", "place_th": "มุดอน", "lat": 16.2618, "lng": 97.7215}
+        ];
+
+        const thailandCities = [
+            {"country": "thailand", "place": "Bangkok", "code": "10100", "place_mm": "ဘန်ကောက်", "place_th": "กรุงเทพมหานคร", "lat": 13.7563, "lng": 100.5018},
+            {"country": "thailand", "place": "Chiang Mai", "code": "50000", "place_mm": "ချင်းမိုင်", "place_th": "เชียงใหม่", "lat": 18.7883, "lng": 98.9853},
+            {"country": "thailand", "place": "Phuket", "code": "83000", "place_mm": "ဖူးခက်", "place_th": "ภูเก็ต", "lat": 7.8804, "lng": 98.3923},
+            {"country": "thailand", "place": "Pattaya", "code": "20150", "place_mm": "ပတ္တယား", "place_th": "พัทยา", "lat": 12.9236, "lng": 100.8824},
+            {"country": "thailand", "place": "Mae Sai", "code": "57130", "place_mm": "မယ်ဆိုင်", "place_th": "แม่สาย", "lat": 20.4367, "lng": 99.8767},
+            {"country": "thailand", "place": "Mae Sot", "code": "63110", "place_mm": "မယ်ဆော့", "place_th": "แม่สอด", "lat": 16.7183, "lng": 98.5714},
+            {"country": "thailand", "place": "Chiang Rai", "code": "57000", "place_mm": "ချင်းရိုင်", "place_th": "เชียงราย", "lat": 19.9105, "lng": 99.8406},
+            {"country": "thailand", "place": "Hat Yai", "code": "90110", "place_mm": "ဟက်ထိုင်း", "place_th": "หาดใหญ่", "lat": 7.0086, "lng": 100.4747},
+            {"country": "thailand", "place": "Khon Kaen", "code": "40000", "place_mm": "ခွန်ခန်", "place_th": "ขอนแก่น", "lat": 16.4322, "lng": 102.8236},
+            {"country": "thailand", "place": "Udon Thani", "code": "41000", "place_mm": "ဥဒွန်သာနီ", "place_th": "อุดรธานี", "lat": 17.4139, "lng": 102.7871},
+            {"country": "thailand", "place": "Surat Thani", "code": "84000", "place_mm": "ဆူရတ်သာနီ", "place_th": "สุราษฎร์ธานี", "lat": 9.1395, "lng": 99.3217},
+            {"country": "thailand", "place": "Chonburi", "code": "20000", "place_mm": "ချွန်ဘူရီ", "place_th": "ชลบุรี", "lat": 13.3611, "lng": 100.9847},
+            {"country": "thailand", "place": "Rayong", "code": "21000", "place_mm": "ရယောင်း", "place_th": "ระยอง", "lat": 12.7068, "lng": 101.2814},
+            {"country": "thailand", "place": "Hua Hin", "code": "77110", "place_mm": "ဟွားဟင်", "place_th": "หัวหิน", "lat": 12.5684, "lng": 99.9576},
+            {"country": "thailand", "place": "Ayutthaya", "code": "13000", "place_mm": "အယုဒ္ဓယ", "place_th": "พระนครศรีอยุธยา", "lat": 14.3692, "lng": 100.5876},
+            {"country": "thailand", "place": "Krabi", "code": "81000", "place_mm": "ကရဘိ", "place_th": "กระบี่", "lat": 8.0863, "lng": 98.9063},
+            {"country": "thailand", "place": "Kanchanaburi", "code": "71000", "place_mm": "ကန်ချနဘူရီ", "place_th": "กาญจนบุรี", "lat": 14.0227, "lng": 99.5328},
+            {"country": "thailand", "place": "Nakhon Pathom", "code": "73000", "place_mm": "နခေါန်ပသွန်", "place_th": "นครปฐม", "lat": 13.8196, "lng": 100.0567},
+            {"country": "thailand", "place": "Ranong", "code": "85000", "place_mm": "ရနောင်း", "place_th": "ระนอง", "lat": 9.9647, "lng": 98.6089},
+            {"country": "thailand", "place": "Trang", "code": "92000", "place_mm": "ထရန်", "place_th": "ตรัง", "lat": 7.5634, "lng": 99.6114},
+            {"country": "thailand", "place": "Nakhon Ratchasima", "code": "30000", "place_mm": "နဂိုရာဇသီမာ", "place_th": "โคราช", "lat": 14.9799, "lng": 102.0978},
+            {"country": "thailand", "place": "Ubon Ratchathani", "code": "34000", "place_mm": "ဥဘွန်ရာဇဌာနီ", "place_th": "อุบลราชธานี", "lat": 15.2298, "lng": 104.8594},
+            {"country": "thailand", "place": "Nong Khai", "code": "43000", "place_mm": "နောင်ချိုး", "place_th": "หนองคาย", "lat": 17.8783, "lng": 102.7420},
+            {"country": "thailand", "place": "Samut Prakan", "code": "10280", "place_mm": "သမုတ်ပရာကန်", "place_th": "สมุทรปราการ", "lat": 13.5993, "lng": 100.5968},
+            {"country": "thailand", "place": "Phetchaburi", "code": "76000", "place_mm": "ဖက်ချာဘူရီ", "place_th": "เพชรบุรี", "lat": 13.1119, "lng": 99.9456},
+            {"country": "thailand", "place": "Lampang", "code": "52000", "place_mm": "လမ်ပန်း", "place_th": "ลำปาง", "lat": 18.2923, "lng": 99.4928},
+            {"country": "thailand", "place": "Phitsanulok", "code": "65000", "place_mm": "ဖိစာနူလိုက်", "place_th": "พิษณุโลก", "lat": 16.8211, "lng": 100.2659},
+            {"country": "thailand", "place": "Yala", "code": "95000", "place_mm": "ယာလာ", "place_th": "ยะลา", "lat": 6.5414, "lng": 101.2814},
+            {"country": "thailand", "place": "Songkhla", "code": "90000", "place_mm": "ဆောင်ခလာ", "place_th": "สงขลา", "lat": 7.1895, "lng": 100.5953},
+            {"country": "thailand", "place": "Sukhothai", "code": "64000", "place_mm": "သုခေါဒယ", "place_th": "สุโขทัย", "lat": 17.0056, "lng": 99.8263},
+            {"country": "thailand", "place": "Narathiwat", "code": "96000", "place_mm": "နာရာထိဝတ်", "place_th": "นราธิวาส", "lat": 6.4255, "lng": 101.8253},
+            {"country": "thailand", "place": "Satun", "code": "91000", "place_mm": "သာထွန်", "place_th": "สตูล", "lat": 6.6238, "lng": 100.0668}
+        ];
+
+        let map;
+        let markers = [];
+
         function initMap() {
             // Default coordinates (using Yangon as default)
             const defaultLocation = { lat: 16.8661, lng: 96.1951 };
             
-            const map = new google.maps.Map(document.getElementById("map"), {
+            map = new google.maps.Map(document.getElementById("map"), {
                 center: defaultLocation,
                 zoom: 15,
                 mapTypeControl: false,
@@ -197,32 +294,81 @@
 
             // Add search functionality
             const searchInput = document.getElementById("search-input");
-            const searchBox = new google.maps.places.SearchBox(searchInput);
+            const searchResults = document.getElementById("search-results");
             
-            searchBox.addListener("places_changed", () => {
-                const places = searchBox.getPlaces();
+            searchInput.addEventListener("input", function() {
+                const query = this.value.toLowerCase();
+                searchResults.innerHTML = "";
                 
-                if (places.length === 0) return;
+                if (query.length < 2) {
+                    searchResults.style.display = "none";
+                    return;
+                }
                 
-                const bounds = new google.maps.LatLngBounds();
+                // Search in Myanmar cities
+                const myanmarMatches = myanmarCities.filter(city => 
+                    city.place.toLowerCase().includes(query) || 
+                    city.place_mm.includes(query) ||
+                    city.place_th.includes(query)
+                    .slice(0, 5);
                 
-                places.forEach((place) => {
-                    if (!place.geometry || !place.geometry.location) return;
-                    
-                    // Add marker
-                    new google.maps.Marker({
-                        map,
-                        position: place.geometry.location,
+                // Search in Thailand cities
+                const thailandMatches = thailandCities.filter(city => 
+                    city.place.toLowerCase().includes(query) || 
+                    city.place_mm.includes(query) ||
+                    city.place_th.includes(query))
+                    .slice(0, 5);
+                
+                const allMatches = [...myanmarMatches, ...thailandMatches];
+                
+                if (allMatches.length === 0) {
+                    const noResults = document.createElement("div");
+                    noResults.className = "result-item";
+                    noResults.textContent = "ရလဒ်မတွေ့ပါ";
+                    searchResults.appendChild(noResults);
+                } else {
+                    allMatches.forEach(city => {
+                        const resultItem = document.createElement("div");
+                        resultItem.className = "result-item";
+                        
+                        const nameDiv = document.createElement("div");
+                        nameDiv.textContent = `${city.place_mm} (${city.place})`;
+                        
+                        const countryDiv = document.createElement("div");
+                        countryDiv.className = "text-xs text-gray-500";
+                        countryDiv.textContent = city.country === "myanmar" ? "မြန်မာ" : "ထိုင်း";
+                        
+                        resultItem.appendChild(nameDiv);
+                        resultItem.appendChild(countryDiv);
+                        
+                        resultItem.addEventListener("click", function() {
+                            searchInput.value = city.place_mm;
+                            searchResults.style.display = "none";
+                            
+                            // Center map on selected city
+                            const pos = { lat: city.lat, lng: city.lng };
+                            map.setCenter(pos);
+                            map.setZoom(12);
+                            
+                            // Clear existing markers
+                            clearMarkers();
+                            
+                            // Add marker for selected city
+                            addMarker(pos, city.place_mm);
+                        });
+                        
+                        searchResults.appendChild(resultItem);
                     });
-                    
-                    if (place.geometry.viewport) {
-                        bounds.union(place.geometry.viewport);
-                    } else {
-                        bounds.extend(place.geometry.location);
-                    }
-                });
+                }
                 
-                map.fitBounds(bounds);
+                searchResults.style.display = "block";
+            });
+            
+            // Hide results when clicking outside
+            document.addEventListener("click", function(e) {
+                if (!searchResults.contains(e.target) && e.target !== searchInput) {
+                    searchResults.style.display = "none";
+                }
             });
             
             // Add location button functionality
@@ -237,19 +383,11 @@
                             map.setCenter(pos);
                             map.setZoom(17);
                             
+                            // Clear existing markers
+                            clearMarkers();
+                            
                             // Add marker for current location
-                            new google.maps.Marker({
-                                position: pos,
-                                map: map,
-                                icon: {
-                                    path: google.maps.SymbolPath.CIRCLE,
-                                    scale: 10,
-                                    fillColor: "#4285F4",
-                                    fillOpacity: 1,
-                                    strokeColor: "#FFFFFF",
-                                    strokeWeight: 2,
-                                },
-                            });
+                            addMarker(pos, "သင့်တည်နေရာ", true);
                         },
                         () => {
                             alert("သင့်တည်နေရာကို ရယူရန် ခွင့်ပြုချက်လိုအပ်ပါသည်။");
@@ -266,12 +404,45 @@
                 item.addEventListener("click", function() {
                     const categoryText = this.querySelector("span").textContent;
                     searchInput.value = categoryText;
-                    
-                    // Simulate search
-                    const event = new Event("places_changed");
-                    searchBox.dispatchEvent(event);
+                    searchInput.focus();
                 });
             });
+            
+            // Add directions button functionality
+            document.querySelector(".fab-button").addEventListener("click", function() {
+                alert("လမ်းညွှန်ခြင်းလုပ်ဆောင်ချက်ကို ဖွင့်လိုက်ပါပြီ။");
+            });
+        }
+        
+        function addMarker(position, title, isCurrentLocation = false) {
+            const marker = new google.maps.Marker({
+                position: position,
+                map: map,
+                title: title,
+                icon: isCurrentLocation ? {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    scale: 10,
+                    fillColor: "#4285F4",
+                    fillOpacity: 1,
+                    strokeColor: "#FFFFFF",
+                    strokeWeight: 2,
+                } : null
+            });
+            
+            markers.push(marker);
+            
+            const infoWindow = new google.maps.InfoWindow({
+                content: `<div class="font-bold">${title}</div>`
+            });
+            
+            marker.addListener("click", () => {
+                infoWindow.open(map, marker);
+            });
+        }
+        
+        function clearMarkers() {
+            markers.forEach(marker => marker.setMap(null));
+            markers = [];
         }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDI9QayA38zpkwpGVCFtUQ3WxUkgpwFvEk&libraries=places&callback=initMap&language=my" async defer></script>
