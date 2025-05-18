@@ -1,43 +1,279 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Myawaddy Address Location</title>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Maps ပုံစံ မြေပုံ ရှာဖွေရေး</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css">
     <style>
-      #map {
-        height: 400px;
-        width: 100%;
-      }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .search-container {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 400px;
+            z-index: 10;
+        }
+        .category-container {
+            position: absolute;
+            top: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            overflow-x: auto;
+            z-index: 10;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .category-container::-webkit-scrollbar {
+            display: none;
+        }
+        .category-item {
+            white-space: nowrap;
+            margin: 0 5px;
+        }
+        #map {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        .bottom-navbar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            z-index: 10;
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+        }
+        .fab-button {
+            position: absolute;
+            right: 20px;
+            bottom: 80px;
+            z-index: 10;
+        }
+        .location-button {
+            position: absolute;
+            right: 20px;
+            bottom: 150px;
+            z-index: 10;
+        }
+        .layer-button {
+            position: absolute;
+            right: 20px;
+            top: 120px;
+            z-index: 10;
+        }
+        .weather-info {
+            position: absolute;
+            bottom: 80px;
+            left: 10px;
+            background-color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            z-index: 10;
+            font-size: 14px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
     </style>
-  </head>
-  <body>
-    <h3>မြိုးနာ လိပ်စာအတွက် Google Map</h3>
+</head>
+<body>
+    <!-- Search Bar -->
+    <div class="search-container">
+        <div class="bg-white rounded-full shadow-lg p-3 flex items-center">
+            <i class="fas fa-map-marker-alt text-blue-500 mr-2"></i>
+            <input type="text" placeholder="ရှာဖွေရန်" class="w-full outline-none bg-transparent" id="search-input">
+            <i class="fas fa-microphone text-gray-500 ml-2"></i>
+            <div class="w-8 h-8 bg-gray-200 rounded-full ml-2 flex items-center justify-center">
+                <i class="fas fa-user text-gray-500"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Categories -->
+    <div class="category-container">
+        <div class="flex">
+            <div class="category-item bg-white rounded-full shadow px-4 py-2 flex items-center">
+                <i class="fas fa-utensils mr-2"></i>
+                <span>စားသောက်ဆိုင်များ</span>
+            </div>
+            <div class="category-item bg-white rounded-full shadow px-4 py-2 flex items-center">
+                <i class="fas fa-hotel mr-2"></i>
+                <span>ဟိုတယ်များ</span>
+            </div>
+            <div class="category-item bg-white rounded-full shadow px-4 py-2 flex items-center">
+                <i class="fas fa-shopping-bag mr-2"></i>
+                <span>စျေးဝယ်</span>
+            </div>
+            <div class="category-item bg-white rounded-full shadow px-4 py-2 flex items-center">
+                <i class="fas fa-gas-pump mr-2"></i>
+                <span>ဆီဆိုင်</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Map -->
     <div id="map"></div>
 
+    <!-- Weather Info -->
+    <div class="weather-info flex items-center">
+        <span class="mr-2">29°</span>
+        <span class="text-green-500">AQI 30</span>
+    </div>
+
+    <!-- Layer Button -->
+    <div class="layer-button bg-white rounded-full shadow-lg p-3 flex items-center justify-center">
+        <i class="fas fa-layers text-gray-600"></i>
+    </div>
+
+    <!-- Location Button -->
+    <div class="location-button bg-white rounded-full shadow-lg p-3 flex items-center justify-center">
+        <i class="fas fa-location-arrow text-blue-600"></i>
+    </div>
+
+    <!-- Floating Action Button -->
+    <div class="fab-button bg-teal-500 rounded-full shadow-lg p-4 flex items-center justify-center">
+        <i class="fas fa-directions text-white text-xl"></i>
+    </div>
+
+    <!-- Bottom Navbar -->
+    <div class="bottom-navbar py-2">
+        <div class="flex justify-around">
+            <div class="text-center px-2">
+                <div class="bg-blue-100 rounded-full w-10 h-10 flex items-center justify-center mx-auto">
+                    <i class="fas fa-search text-blue-500"></i>
+                </div>
+                <p class="text-xs mt-1 text-blue-500">ရှာဖွေရန်</p>
+            </div>
+            <div class="text-center px-2">
+                <div class="rounded-full w-10 h-10 flex items-center justify-center mx-auto">
+                    <i class="far fa-bookmark text-gray-500"></i>
+                </div>
+                <p class="text-xs mt-1 text-gray-500">သိမ်းဆည်းပြီး</p>
+            </div>
+            <div class="text-center px-2">
+                <div class="rounded-full w-10 h-10 flex items-center justify-center mx-auto">
+                    <i class="fas fa-plus text-gray-500"></i>
+                </div>
+                <p class="text-xs mt-1 text-gray-500">ပါဝင်ရန်</p>
+            </div>
+            <div class="text-center px-2">
+                <div class="rounded-full w-10 h-10 flex items-center justify-center mx-auto">
+                    <i class="fas fa-briefcase text-gray-500"></i>
+                </div>
+                <p class="text-xs mt-1 text-gray-500">စီးပွားရေး</p>
+            </div>
+        </div>
+    </div>
+
     <script>
-      function initMap() {
-        const address = "မြိုးနာ, Myanmar, Myawaddy 14091, Main Street, House 123";
-        const geocoder = new google.maps.Geocoder();
-
-        geocoder.geocode({ address: address }, function (results, status) {
-          if (status === "OK") {
+        function initMap() {
+            // Default coordinates (using Yangon as default)
+            const defaultLocation = { lat: 16.8661, lng: 96.1951 };
+            
             const map = new google.maps.Map(document.getElementById("map"), {
-              zoom: 16,
-              center: results[0].geometry.location,
+                center: defaultLocation,
+                zoom: 15,
+                mapTypeControl: false,
+                streetViewControl: false,
+                fullscreenControl: false,
+                zoomControl: false,
             });
 
-            new google.maps.Marker({
-              map: map,
-              position: results[0].geometry.location,
+            // Add search functionality
+            const searchInput = document.getElementById("search-input");
+            const searchBox = new google.maps.places.SearchBox(searchInput);
+            
+            searchBox.addListener("places_changed", () => {
+                const places = searchBox.getPlaces();
+                
+                if (places.length === 0) return;
+                
+                const bounds = new google.maps.LatLngBounds();
+                
+                places.forEach((place) => {
+                    if (!place.geometry || !place.geometry.location) return;
+                    
+                    // Add marker
+                    new google.maps.Marker({
+                        map,
+                        position: place.geometry.location,
+                    });
+                    
+                    if (place.geometry.viewport) {
+                        bounds.union(place.geometry.viewport);
+                    } else {
+                        bounds.extend(place.geometry.location);
+                    }
+                });
+                
+                map.fitBounds(bounds);
             });
-          } else {
-            alert("Geocode was not successful for the following reason: " + status);
-          }
-        });
-      }
+            
+            // Add location button functionality
+            document.querySelector(".location-button").addEventListener("click", () => {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        (position) => {
+                            const pos = {
+                                lat: position.coords.latitude,
+                                lng: position.coords.longitude,
+                            };
+                            map.setCenter(pos);
+                            map.setZoom(17);
+                            
+                            // Add marker for current location
+                            new google.maps.Marker({
+                                position: pos,
+                                map: map,
+                                icon: {
+                                    path: google.maps.SymbolPath.CIRCLE,
+                                    scale: 10,
+                                    fillColor: "#4285F4",
+                                    fillOpacity: 1,
+                                    strokeColor: "#FFFFFF",
+                                    strokeWeight: 2,
+                                },
+                            });
+                        },
+                        () => {
+                            alert("သင့်တည်နေရာကို ရယူရန် ခွင့်ပြုချက်လိုအပ်ပါသည်။");
+                        }
+                    );
+                } else {
+                    alert("သင့်ဘရောက်ဇာသည် Geolocation ကို ထောက်ပံ့မထားပါ။");
+                }
+            });
+            
+            // Add category filter functionality
+            const categoryItems = document.querySelectorAll(".category-item");
+            categoryItems.forEach((item) => {
+                item.addEventListener("click", function() {
+                    const categoryText = this.querySelector("span").textContent;
+                    searchInput.value = categoryText;
+                    
+                    // Simulate search
+                    const event = new Event("places_changed");
+                    searchBox.dispatchEvent(event);
+                });
+            });
+        }
     </script>
-
-    <script async
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDI9QayA38zpkwpGVCFtUQ3WxUkgpwFvEk&callback=initMap">
-    </script>
-  </body>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDI9QayA38zpkwpGVCFtUQ3WxUkgpwFvEk&libraries=places&callback=initMap&language=my" async defer></script>
+</body>
 </html>
