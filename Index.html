@@ -3,277 +3,242 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Maps ပုံစံ မြေပုံ ရှာဖွေရေး</title>
+    <title>Myanmar-Thailand Postal Code Search | မြန်မာ-ထိုင်း စာတိုက်သင်္ကေတ</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css" />
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap');
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
+            font-family: 'Noto Sans Myanmar', 'Padauk', Arial, sans-serif;
         }
-        .search-container {
-            position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 400px;
-            z-index: 10;
+        .result-transition {
+            transition: all 0.3s ease-in-out;
         }
-        .category-container {
-            position: absolute;
-            top: 70px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            overflow-x: auto;
-            z-index: 10;
-            -ms-overflow-style: none;
-            scrollbar-width: none;
+        .tab.active {
+            border-bottom-color: #fff;
+            background-color: #fff;
         }
-        .category-container::-webkit-scrollbar {
-            display: none;
+        /* Custom scrollbar */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
         }
-        .category-item {
-            white-space: nowrap;
-            margin: 0 5px;
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 5px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 5px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #555;
         }
         #map {
-            height: 100%;
+            height: 400px;
             width: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 0;
+            border-radius: 0.5rem;
         }
-        .bottom-navbar {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: white;
-            z-index: 10;
-            box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+        .leaflet-popup-content {
+            font-family: 'Noto Sans Myanmar', 'Padauk', Arial, sans-serif;
         }
-        .fab-button {
-            position: absolute;
-            right: 20px;
-            bottom: 80px;
-            z-index: 10;
-        }
-        .location-button {
-            position: absolute;
-            right: 20px;
-            bottom: 150px;
-            z-index: 10;
-        }
-        .layer-button {
-            position: absolute;
-            right: 20px;
-            top: 120px;
-            z-index: 10;
-        }
-        .weather-info {
-            position: absolute;
-            bottom: 80px;
-            left: 10px;
-            background-color: white;
-            padding: 5px 10px;
-            border-radius: 20px;
-            z-index: 10;
-            font-size: 14px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        @media print {
+            #map {
+                height: 600px;
+            }
+            .page-break {
+                page-break-after: always;
+            }
         }
     </style>
 </head>
-<body>
-    <!-- Search Bar -->
-    <div class="search-container">
-        <div class="bg-white rounded-full shadow-lg p-3 flex items-center">
-            <i class="fas fa-map-marker-alt text-blue-500 mr-2"></i>
-            <input type="text" placeholder="ရှာဖွေရန်" class="w-full outline-none bg-transparent" id="search-input">
-            <i class="fas fa-microphone text-gray-500 ml-2"></i>
-            <div class="w-8 h-8 bg-gray-200 rounded-full ml-2 flex items-center justify-center">
-                <i class="fas fa-user text-gray-500"></i>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8 max-w-5xl">
+        <div class="bg-white shadow-lg rounded-lg p-6 mb-8">
+            <div class="flex items-center justify-center mb-6">
+                <img src="https://cdn.jsdelivr.net/npm/country-flag-icons@1.5.7/flags/4x3/mm.svg" alt="Myanmar Flag" class="h-10 mr-2">
+                <h1 class="text-3xl font-bold text-center text-gray-800">မြန်မာ-ထိုင်း စာတိုက်သင်္ကေတနံပါတ် ရှာဖွေရေး</h1>
+                <img src="https://cdn.jsdelivr.net/npm/country-flag-icons@1.5.7/flags/4x3/th.svg" alt="Thailand Flag" class="h-10 ml-2">
+            </div>
+            
+            <!-- Search Type Selection -->
+            <div class="flex flex-wrap mb-6">
+                <div class="w-full md:w-1/2 px-2 mb-4 md:mb-0">
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <div class="flex items-center mb-3">
+                            <input id="searchTypeCode" type="radio" name="searchType" value="code" class="h-5 w-5 text-blue-600" checked>
+                            <label for="searchTypeCode" class="ml-2 text-base font-medium text-gray-700">
+                                စာတိုက်သင်္ကေတနံပါတ်ဖြင့် ရှာရန်
+                            </label>
+                        </div>
+                        <div class="flex items-center">
+                            <input id="searchTypePlace" type="radio" name="searchType" value="place" class="h-5 w-5 text-blue-600">
+                            <label for="searchTypePlace" class="ml-2 text-base font-medium text-gray-700">
+                                မြို့အမည်ဖြင့် ရှာရန်
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="w-full md:w-1/2 px-2">
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <div class="flex items-center mb-3">
+                            <input id="countryAll" type="radio" name="countryFilter" value="all" class="h-5 w-5 text-blue-600" checked>
+                            <label for="countryAll" class="ml-2 text-base font-medium text-gray-700">
+                                နိုင်ငံအားလုံး
+                            </label>
+                        </div>
+                        <div class="flex flex-wrap">
+                            <div class="w-1/2 flex items-center">
+                                <input id="countryMyanmar" type="radio" name="countryFilter" value="myanmar" class="h-5 w-5 text-blue-600">
+                                <label for="countryMyanmar" class="ml-2 text-base font-medium text-gray-700">
+                                    မြန်မာ
+                                </label>
+                            </div>
+                            <div class="w-1/2 flex items-center">
+                                <input id="countryThailand" type="radio" name="countryFilter" value="thailand" class="h-5 w-5 text-blue-600">
+                                <label for="countryThailand" class="ml-2 text-base font-medium text-gray-700">
+                                    ထိုင်း
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Search Box -->
+            <div class="mb-6">
+                <div class="flex rounded-lg overflow-hidden border border-gray-300">
+                    <input type="text" id="searchInput" 
+                           class="flex-grow px-4 py-3 text-lg focus:outline-none" 
+                           placeholder="စာတိုက်သင်္ကေတနံပါတ် သို့မဟုတ် မြို့အမည် ရေးပါ...">
+                    <button onclick="search()" 
+                            class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 flex items-center justify-center transition-colors duration-300">
+                        <i class="fas fa-search mr-2"></i> ရှာရန်
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Map View -->
+        <div class="bg-white shadow-lg rounded-lg p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4">မြေပုံပြသမှု</h2>
+            <div id="map"></div>
+        </div>
+        
+        <!-- Results Display -->
+        <div id="resultContainer" class="result-transition hidden bg-white shadow-lg rounded-lg p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4">ရှာဖွေမှု ရလဒ်များ</h2>
+            
+            <!-- Stats -->
+            <div id="resultStats" class="text-gray-600 mb-4"></div>
+            
+            <!-- Table View -->
+            <div class="overflow-x-auto custom-scrollbar">
+                <table class="min-w-full bg-white border-collapse">
+                    <thead>
+                        <tr class="bg-gray-200 text-gray-700 uppercase text-xs">
+                            <th onclick="sortTable(0)" class="cursor-pointer px-4 py-2 border text-left">နိုင်ငံ <i class="fas fa-sort ml-1"></i></th>
+                            <th onclick="sortTable(1)" class="cursor-pointer px-4 py-2 border text-left">မြို့အမည် <i class="fas fa-sort ml-1"></i></th>
+                            <th onclick="sortTable(2)" class="cursor-pointer px-4 py-2 border text-left">စာတိုက်သင်္ကေတနံပါတ် <i class="fas fa-sort ml-1"></i></th>
+                            <th onclick="sortTable(3)" class="cursor-pointer px-4 py-2 border text-left">မြို့အမည် (မြန်မာ) <i class="fas fa-sort ml-1"></i></th>
+                            <th onclick="sortTable(4)" class="cursor-pointer px-4 py-2 border text-left">မြို့အမည် (ထိုင်း) <i class="fas fa-sort ml-1"></i></th>
+                            <th onclick="sortTable(5)" class="cursor-pointer px-4 py-2 border text-left">တည်နေရာ <i class="fas fa-sort ml-1"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="bg-white shadow-lg rounded-lg p-6">
+            <div class="text-center text-gray-600">
+                <p class="mb-2">© 2023 မြန်မာ-ထိုင်း စာတိုက်သင်္ကေတနံပါတ် ရှာဖွေရေးစနစ်</p>
+                <p class="text-sm">မှတ်ချက်: အထက်ပါအချက်အလက်များသည် အထောက်အကူဖြစ်စေရန်အတွက်သာဖြစ်ပြီး၊ အချိန်နှင့်အမျှ ပြောင်းလဲနိုင်ပါသည်။</p>
             </div>
         </div>
     </div>
 
-    <!-- Categories -->
-    <div class="category-container">
-        <div class="flex">
-            <div class="category-item bg-white rounded-full shadow px-4 py-2 flex items-center">
-                <i class="fas fa-utensils mr-2"></i>
-                <span>စားသောက်ဆိုင်များ</span>
-            </div>
-            <div class="category-item bg-white rounded-full shadow px-4 py-2 flex items-center">
-                <i class="fas fa-hotel mr-2"></i>
-                <span>ဟိုတယ်များ</span>
-            </div>
-            <div class="category-item bg-white rounded-full shadow px-4 py-2 flex items-center">
-                <i class="fas fa-shopping-bag mr-2"></i>
-                <span>စျေးဝယ်</span>
-            </div>
-            <div class="category-item bg-white rounded-full shadow px-4 py-2 flex items-center">
-                <i class="fas fa-gas-pump mr-2"></i>
-                <span>ဆီဆိုင်</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Map -->
-    <div id="map"></div>
-
-    <!-- Weather Info -->
-    <div class="weather-info flex items-center">
-        <span class="mr-2">29°</span>
-        <span class="text-green-500">AQI 30</span>
-    </div>
-
-    <!-- Layer Button -->
-    <div class="layer-button bg-white rounded-full shadow-lg p-3 flex items-center justify-center">
-        <i class="fas fa-layers text-gray-600"></i>
-    </div>
-
-    <!-- Location Button -->
-    <div class="location-button bg-white rounded-full shadow-lg p-3 flex items-center justify-center">
-        <i class="fas fa-location-arrow text-blue-600"></i>
-    </div>
-
-    <!-- Floating Action Button -->
-    <div class="fab-button bg-teal-500 rounded-full shadow-lg p-4 flex items-center justify-center">
-        <i class="fas fa-directions text-white text-xl"></i>
-    </div>
-
-    <!-- Bottom Navbar -->
-    <div class="bottom-navbar py-2">
-        <div class="flex justify-around">
-            <div class="text-center px-2">
-                <div class="bg-blue-100 rounded-full w-10 h-10 flex items-center justify-center mx-auto">
-                    <i class="fas fa-search text-blue-500"></i>
-                </div>
-                <p class="text-xs mt-1 text-blue-500">ရှာဖွေရန်</p>
-            </div>
-            <div class="text-center px-2">
-                <div class="rounded-full w-10 h-10 flex items-center justify-center mx-auto">
-                    <i class="far fa-bookmark text-gray-500"></i>
-                </div>
-                <p class="text-xs mt-1 text-gray-500">သိမ်းဆည်းပြီး</p>
-            </div>
-            <div class="text-center px-2">
-                <div class="rounded-full w-10 h-10 flex items-center justify-center mx-auto">
-                    <i class="fas fa-plus text-gray-500"></i>
-                </div>
-                <p class="text-xs mt-1 text-gray-500">ပါဝင်ရန်</p>
-            </div>
-            <div class="text-center px-2">
-                <div class="rounded-full w-10 h-10 flex items-center justify-center mx-auto">
-                    <i class="fas fa-briefcase text-gray-500"></i>
-                </div>
-                <p class="text-xs mt-1 text-gray-500">စီးပွားရေး</p>
-            </div>
-        </div>
-    </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
     <script>
-        function initMap() {
-            // Default coordinates (using Yangon as default)
-            const defaultLocation = { lat: 16.8661, lng: 96.1951 };
-            
-            const map = new google.maps.Map(document.getElementById("map"), {
-                center: defaultLocation,
-                zoom: 15,
-                mapTypeControl: false,
-                streetViewControl: false,
-                fullscreenControl: false,
-                zoomControl: false,
-            });
-
-            // Add search functionality
-            const searchInput = document.getElementById("search-input");
-            const searchBox = new google.maps.places.SearchBox(searchInput);
-            
-            searchBox.addListener("places_changed", () => {
-                const places = searchBox.getPlaces();
-                
-                if (places.length === 0) return;
-                
-                const bounds = new google.maps.LatLngBounds();
-                
-                places.forEach((place) => {
-                    if (!place.geometry || !place.geometry.location) return;
+        // ပြည့်စုံသော မြန်မာ နှင့် ထိုင်းမြို့များ၏ postal code စာရင်း
+        const postalData = [
+            // မြန်မာမြို့များ
+            {"country": "myanmar", "place": "Pathein", "code": "10010", "place_mm": "ပုသိမ်", "place_th": "ผะอิน", "lat": 16.7793, "lng": 94.7321},
+    {"country": "myanmar", "place": "Sittwe", "code": "18000", "place_mm": "စစ်တွေ", "place_th": "สิตตวี", "lat": 20.1527, "lng": 92.8727},
+    {"country": "myanmar", "place": "Taunggyi", "code": "06000", "place_mm": "တောင်ကြီး", "place_th": "ตองยี", "lat": 20.7893, "lng": 97.0378},
+    {"country": "myanmar", "place": "Myitkyina", "code": "01000", "place_mm": "မြစ်ကြီးနား", "place_th": "มิตจีนา", "lat": 25.3833, "lng": 97.3959},
+    {"country": "myanmar", "place": "Hakha", "code": "02000", "place_mm": "ဟားခါး", "place_th": "ฮาคา", "lat": 22.6500, "lng": 93.6167},
+    {"country": "myanmar", "place": "Loikaw", "code": "09000", "place_mm": "လွိုင်ကော်", "place_th": "โลยก่อ", "lat": 19.6790, "lng": 97.2107},
+    {"country": "myanmar", "place": "Dawei", "code": "14000", "place_mm": "ထားဝယ်", "place_th": "ทวาย", "lat": 14.0823, "lng": 98.1926},
+    {"country": "myanmar", "place": "Hpa-An", "code": "13000", "place_mm": "ဘားအံ", "place_th": "พะอัน", "lat": 16.8949, "lng": 97.6217},
+    {"country": "myanmar", "place": "Magway", "code": "04000", "place_mm": "မကွေး", "place_th": "มาเกว", "lat": 20.1494, "lng": 94.9513},
+    {"country": "myanmar", "place": "Sagaing", "code": "03000", "place_mm": "စစ်ကိုင်း", "place_th": "สะกาย", "lat": 21.8787, "lng": 95.9797},
+    {"country": "myanmar", "place": "Pyay", "code": "08080", "place_mm": "ပြည်", "place_th": "แปร", "lat": 18.8243, "lng": 95.2210},
+    {"country": "myanmar", "place": "Myawaddy", "code": "07000", "place_mm": "မြဝတီ", "place_th": "เมียวดี", "lat": 16.6866, "lng": 98.5091},
+    {"country": "myanmar", "place": "Tachileik", "code": "06500", "place_mm": "တာချီလိတ်", "place_th": "ท่าขี้เหล็ก", "lat": 20.4475, "lng": 99.8808},
+    {"country": "myanmar", "place": "Muse", "code": "06100", "place_mm": "မူဆယ်", "place_th": "เมืองสาด", "lat": 23.9920, "lng": 97.9088},
+    {"country": "myanmar", "place": "Kawthaung", "code": "14010", "place_mm": "ကော့သောင်း", "place_th": "กอธอง", "lat": 10.0492, "lng": 98.5367},
+    {"country": "myanmar", "place": "Lashio", "code": "06020", "place_mm": "လားရှိုး", "place_th": "ลาซิโอ", "lat": 22.9359, "lng": 97.7498},
+    {"country": "myanmar", "place": "Yangon", "code": "11000", "place_mm": "ရန်ကုန်", "place_th": "ย่างกุ้ง", "lat": 16.8409, "lng": 96.1735},
+    {"country": "myanmar", "place": "Mandalay", "code": "05000", "place_mm": "မန္တလေး", "place_th": "มัณฑะเลย์", "lat": 21.9588, "lng": 96.0891},
+    {"country": "myanmar", "place": "Naypyidaw", "code": "15000", "place_mm": "နေပြည်တော်", "place_th": "เนปิดอว์", "lat": 19.7633, "lng": 96.0785},
+    {"country": "myanmar", "place": "Mawlamyine", "code": "12000", "place_mm": "မော်လမြိုင်", "place_th": "มะละแหม่ง", "lat": 16.4802, "lng": 97.6229},
+    {"country": "myanmar", "place": "Bago", "code": "11000", "place_mm": "ပဲခူး", "place_th": "พะโค", "lat": 17.3358, "lng": 96.4818},
+    {"country": "myanmar", "place": "Monywa", "code": "05010", "place_mm": "မုံရွာ", "place_th": "มอนยวา", "lat": 22.1086, "lng": 95.1426}
+       {"country": "myanmar", "place": "Kalay", "code": "06010", "place_mm": "ကလေး", "place_th": "กะเล", "lat": 23.1887, "lng": 94.0519},
+    {"country": "myanmar", "place": "Pyin Oo Lwin", "code": "05020", "place_mm": "ပြင်ဦးလွင်", "place_th": "ปิ่นอุลิน", "lat": 22.0350, "lng": 96.4568},
+    {"country": "myanmar", "place": "Meiktila", "code": "04010", "place_mm": "မိတ္ထီလာ", "place_th": "เมกติลา", "lat": 20.8735, "lng": 95.8577},
+    {"country": "myanmar", "place": "Pakokku", "code": "04020", "place_mm": "ပခုက္ကူ", "place_th": "ปะโคคู", "lat": 21.3299, "lng": 95.0856},
+    {"country": "myanmar", "place": "Shwebo", "code": "03010", "place_mm": "ရွှေဘို", "place_th": "ชเวโบ", "lat": 22.5693, "lng": 95.6982},
+    {"country": "myanmar", "place": "Thanlyin", "code": "11020", "place_mm": "သန်လျင်", "place_th": "ธันลยิน", "lat": 16.7333, "lng": 96.2500},
+    {"country": "myanmar", "place": "Mudon", "code": "12010", "place_mm": "မုဒုံ", "place_th": "มุดอน", "lat": 16.2618, "lng": 97.7215}      
+            // ထိုင်းမြို့များ
+            {"country": "thailand", "place": "Bangkok", "code": "10100", "place_mm": "ဘန်ကောက်", "place_th": "กรุงเทพมหานคร", "lat": 13.7563, "lng": 100.5018},
+    {"country": "thailand", "place": "Chiang Mai", "code": "50000", "place_mm": "ချင်းမိုင်", "place_th": "เชียงใหม่", "lat": 18.7883, "lng": 98.9853},
+    {"country": "thailand", "place": "Phuket", "code": "83000", "place_mm": "ဖူးခက်", "place_th": "ภูเก็ต", "lat": 7.8804, "lng": 98.3923},
+    {"country": "thailand", "place": "Pattaya", "code": "20150", "place_mm": "ပတ္တယား", "place_th": "พัทยา", "lat": 12.9236, "lng": 100.8824},
+    {"country": "thailand", "place": "Mae Sai", "code": "57130", "place_mm": "မယ်ဆိုင်", "place_th": "แม่สาย", "lat": 20.4367, "lng": 99.8767},
+    {"country": "thailand", "place": "Mae Sot", "code": "63110", "place_mm": "မယ်ဆော့", "place_th": "แม่สอด", "lat": 16.7183, "lng": 98.5714},
+    {"country": "thailand", "place": "Chiang Rai", "code": "57000", "place_mm": "ချင်းရိုင်", "place_th": "เชียงราย", "lat": 19.9105, "lng": 99.8406},
+    {"country": "thailand", "place": "Hat Yai", "code": "90110", "place_mm": "ဟက်ထိုင်း", "place_th": "หาดใหญ่", "lat": 7.0086, "lng": 100.4747},
+    {"country": "thailand", "place": "Khon Kaen", "code": "40000", "place_mm": "ခွန်ခန်", "place_th": "ขอนแก่น", "lat": 16.4322, "lng": 102.8236},
+    {"country": "thailand", "place": "Udon Thani", "code": "41000", "place_mm": "ဥဒွန်သာနီ", "place_th": "อุดรธานี", "lat": 17.4139, "lng": 102.7871},
+    {"country": "thailand", "place": "Surat Thani", "code": "84000", "place_mm": "ဆူရတ်သာနီ", "place_th": "สุราษฎร์ธานี", "lat": 9.1395, "lng": 99.3217},
+    {"country": "thailand", "place": "Chonburi", "code": "20000", "place_mm": "ချွန်ဘူရီ", "place_th": "ชลบุรี", "lat": 13.3611, "lng": 100.9847},
+    {"country": "thailand", "place": "Rayong", "code": "21000", "place_mm": "ရယောင်း", "place_th": "ระยอง", "lat": 12.7068, "lng": 101.2814},
+    {"country": "thailand", "place": "Hua Hin", "code": "77110", "place_mm": "ဟွားဟင်", "place_th": "หัวหิน", "lat": 12.5684, "lng": 99.9576},
+    {"country": "thailand", "place": "Ayutthaya", "code": "13000", "place_mm": "အယုဒ္ဓယ", "place_th": "พระนครศรีอยุธยา", "lat": 14.3692, "lng": 100.5876},
+    {"country": "thailand", "place": "Krabi", "code": "81000", "place_mm": "ကရဘိ", "place_th": "กระบี่", "lat": 8.0863, "lng": 98.9063},
+    {"country": "thailand", "place": "Kanchanaburi", "code": "71000", "place_mm": "ကန်ချနဘူရီ", "place_th": "กาญจนบุรี", "lat": 14.0227, "lng": 99.5328},
+    {"country": "thailand", "place": "Nakhon Pathom", "code": "73000", "place_mm": "နခေါန်ပသွန်", "place_th": "นครปฐม", "lat": 13.8196, "lng": 100.0567},
+    {"country": "thailand", "place": "Ranong", "code": "85000", "place_mm": "ရနောင်း", "place_th": "ระนอง", "lat": 9.9647, "lng": 98.6089},
+    {"country": "thailand", "place": "Trang", "code": "92000", "place_mm": "ထရန်", "place_th": "ตรัง", "lat": 7.5634, "lng": 99.6114},
+    {"country": "thailand", "place": "Nakhon Ratchasima", "code": "30000", "place_mm": "နဂိုရာဇသီမာ", "place_th": "โคราช", "lat": 14.9799, "lng": 102.0978},
+    {"country": "thailand", "place": "Ubon Ratchathani", "code": "34000", "place_mm": "ဥဘွန်ရာဇဌာနီ", "place_th": "อุบลราชธานี", "lat": 15.2298, "lng": 104.8594},
+    {"country": "thailand", "place": "Nong Khai", "code": "43000", "place_mm": "နောင်ချိုး", "place_th": "หนองคาย", "lat": 17.8783, "lng": 102.7420},
+    {"country": "thailand", "place": "Samut Prakan", "code": "10280", "place_mm": "သမုတ်ပရာကန်", "place_th": "สมุทรปราการ", "lat": 13.5993, "lng": 100.5968},
+    {"country": "thailand", "place": "Phetchaburi", "code": "76000", "place_mm": "ဖက်ချာဘူရီ", "place_th": "เพชรบุรี", "lat": 13.1119, "lng": 99.9456}
+             {"country": "thailand", "place": "Lampang", "code": "52000", "place_mm": "လမ်ပန်း", "place_th": "ลำปาง", "lat": 18.2923, "lng": 99.4928},
+    {"country": "thailand", "place": "Phitsanulok", "code": "65000", "place_mm": "ဖိစာနူလိုက်", "place_th": "พิษณุโลก", "lat": 16.8211, "lng": 100.2659},
+    {"country": "thailand", "place": "Yala", "code": "95000", "place_mm": "ယာလာ", "place_th": "ยะลา", "lat": 6.5414, "lng": 101.2814},
+    {"country": "thailand", "place": "Songkhla", "code": "90000", "place_mm": "ဆောင်ခလာ", "place_th": "สงขลา", "lat": 7.1895, "lng": 100.5953},
+    {"country": "thailand", "place": "Sukhothai", "code": "64000", "place_mm": "သုခေါဒယ", "place_th": "สุโขทัย", "lat": 17.0056, "lng": 99.8263},
+    {"country": "thailand", "place": "Narathiwat", "code": "96000", "place_mm": "နာရာထိဝတ်", "place_th": "นราธิวาส", "lat": 6.4255, "lng": 101.8253},
+    {"country": "thailand", "place": "Satun", "code": "91000", "place_mm": "သာထွန်", "place_th": "สตูล", "lat": 6.6238, "lng": 100.0668}
+        ];
+        
                     
-                    // Add marker
-                    new google.maps.Marker({
-                        map,
-                        position: place.geometry.location,
-                    });
-                    
-                    if (place.geometry.viewport) {
-                        bounds.union(place.geometry.viewport);
-                    } else {
-                        bounds.extend(place.geometry.location);
-                    }
-                });
-                
-                map.fitBounds(bounds);
-            });
-            
-            // Add location button functionality
-            document.querySelector(".location-button").addEventListener("click", () => {
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(
-                        (position) => {
-                            const pos = {
-                                lat: position.coords.latitude,
-                                lng: position.coords.longitude,
-                            };
-                            map.setCenter(pos);
-                            map.setZoom(17);
-                            
-                            // Add marker for current location
-                            new google.maps.Marker({
-                                position: pos,
-                                map: map,
-                                icon: {
-                                    path: google.maps.SymbolPath.CIRCLE,
-                                    scale: 10,
-                                    fillColor: "#4285F4",
-                                    fillOpacity: 1,
-                                    strokeColor: "#FFFFFF",
-                                    strokeWeight: 2,
-                                },
-                            });
-                        },
-                        () => {
-                            alert("သင့်တည်နေရာကို ရယူရန် ခွင့်ပြုချက်လိုအပ်ပါသည်။");
-                        }
-                    );
-                } else {
-                    alert("သင့်ဘရောက်ဇာသည် Geolocation ကို ထောက်ပံ့မထားပါ။");
+            // Find the marker at this location and open its popup
+            markers.forEach(marker => {
+                const markerLatLng = marker.getLatLng();
+                if (markerLatLng.lat === lat && markerLatLng.lng === lng) {
+                    marker.openPopup();
                 }
-            });
-            
-            // Add category filter functionality
-            const categoryItems = document.querySelectorAll(".category-item");
-            categoryItems.forEach((item) => {
-                item.addEventListener("click", function() {
-                    const categoryText = this.querySelector("span").textContent;
-                    searchInput.value = categoryText;
-                    
-                    // Simulate search
-                    const event = new Event("places_changed");
-                    searchBox.dispatchEvent(event);
-                });
             });
         }
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDI9QayA38zpkwpGVCFtUQ3WxUkgpwFvEk&libraries=places&callback=initMap&language=my" async defer></script>
 </body>
 </html>
