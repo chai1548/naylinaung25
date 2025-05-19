@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ကမ္ဘာလုံးမြေပုံ</title>
+    <title>Google Maps ပုံစံ မြေပုံ ရှာဖွေရေး</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,12 +15,6 @@
             display: flex;
             flex-direction: column;
         }
-        
-        #map {
-            height: 100%;
-            width: 100%;
-        }
-        
         .search-container {
             position: absolute;
             top: 10px;
@@ -28,172 +24,209 @@
             max-width: 400px;
             z-index: 10;
         }
-        
-        .search-box {
-            width: 100%;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 25px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-            font-size: 16px;
-        }
-        
-        .controls {
+        .category-container {
             position: absolute;
-            bottom: 20px;
-            right: 20px;
-            display: flex;
-            flex-direction: column;
-            z-index: 10;
-        }
-        
-        .control-btn {
-            background-color: white;
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            margin-bottom: 10px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
-        
-        .search-results {
-            position: absolute;
-            top: 50px;
+            top: 70px;
             left: 50%;
             transform: translateX(-50%);
-            width: 90%;
-            max-width: 400px;
-            max-height: 300px;
-            overflow-y: auto;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            overflow-x: auto;
             z-index: 10;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .category-container::-webkit-scrollbar {
             display: none;
         }
-        
-        .result-item {
-            padding: 10px 15px;
-            border-bottom: 1px solid #eee;
-            cursor: pointer;
+        .category-item {
+            white-space: nowrap;
+            margin: 0 5px;
         }
-        
-        .result-item:hover {
-            background-color: #f5f5f5;
+        #map {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        .bottom-navbar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            z-index: 10;
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+        }
+        .fab-button {
+            position: absolute;
+            right: 20px;
+            bottom: 80px;
+            z-index: 10;
+        }
+        .location-button {
+            position: absolute;
+            right: 20px;
+            bottom: 150px;
+            z-index: 10;
+        }
+        .layer-button {
+            position: absolute;
+            right: 20px;
+            top: 120px;
+            z-index: 10;
+        }
+        .weather-info {
+            position: absolute;
+            bottom: 80px;
+            left: 10px;
+            background-color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            z-index: 10;
+            font-size: 14px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
     </style>
 </head>
 <body>
     <!-- Search Bar -->
     <div class="search-container">
-        <input type="text" class="search-box" id="search-input" placeholder="တည်နေရာရှာဖွေရန်...">
-        <div id="search-results" class="search-results"></div>
+        <div class="bg-white rounded-full shadow-lg p-3 flex items-center">
+            <i class="fas fa-map-marker-alt text-blue-500 mr-2"></i>
+            <input type="text" placeholder="ရှာဖွေရန်" class="w-full outline-none bg-transparent" id="search-input">
+            <i class="fas fa-microphone text-gray-500 ml-2"></i>
+            <div class="w-8 h-8 bg-gray-200 rounded-full ml-2 flex items-center justify-center">
+                <i class="fas fa-user text-gray-500"></i>
+            </div>
+        </div>
     </div>
-    
+
+    <!-- Categories -->
+    <div class="category-container">
+        <div class="flex">
+            <div class="category-item bg-white rounded-full shadow px-4 py-2 flex items-center">
+                <i class="fas fa-utensils mr-2"></i>
+                <span>စားသောက်ဆိုင်များ</span>
+            </div>
+            <div class="category-item bg-white rounded-full shadow px-4 py-2 flex items-center">
+                <i class="fas fa-hotel mr-2"></i>
+                <span>ဟိုတယ်များ</span>
+            </div>
+            <div class="category-item bg-white rounded-full shadow px-4 py-2 flex items-center">
+                <i class="fas fa-shopping-bag mr-2"></i>
+                <span>စျေးဝယ်</span>
+            </div>
+            <div class="category-item bg-white rounded-full shadow px-4 py-2 flex items-center">
+                <i class="fas fa-gas-pump mr-2"></i>
+                <span>ဆီဆိုင်</span>
+            </div>
+        </div>
+    </div>
+
     <!-- Map -->
     <div id="map"></div>
-    
-    <!-- Controls -->
-    <div class="controls">
-        <button class="control-btn" id="zoom-in">+</button>
-        <button class="control-btn" id="zoom-out">-</button>
-        <button class="control-btn" id="my-location">📍</button>
+
+    <!-- Weather Info -->
+    <div class="weather-info flex items-center">
+        <span class="mr-2">29°</span>
+        <span class="text-green-500">AQI 30</span>
     </div>
-    
+
+    <!-- Layer Button -->
+    <div class="layer-button bg-white rounded-full shadow-lg p-3 flex items-center justify-center">
+        <i class="fas fa-layers text-gray-600"></i>
+    </div>
+
+    <!-- Location Button -->
+    <div class="location-button bg-white rounded-full shadow-lg p-3 flex items-center justify-center">
+        <i class="fas fa-location-arrow text-blue-600"></i>
+    </div>
+
+    <!-- Floating Action Button -->
+    <div class="fab-button bg-teal-500 rounded-full shadow-lg p-4 flex items-center justify-center">
+        <i class="fas fa-directions text-white text-xl"></i>
+    </div>
+
+    <!-- Bottom Navbar -->
+    <div class="bottom-navbar py-2">
+        <div class="flex justify-around">
+            <div class="text-center px-2">
+                <div class="bg-blue-100 rounded-full w-10 h-10 flex items-center justify-center mx-auto">
+                    <i class="fas fa-search text-blue-500"></i>
+                </div>
+                <p class="text-xs mt-1 text-blue-500">ရှာဖွေရန်</p>
+            </div>
+            <div class="text-center px-2">
+                <div class="rounded-full w-10 h-10 flex items-center justify-center mx-auto">
+                    <i class="far fa-bookmark text-gray-500"></i>
+                </div>
+                <p class="text-xs mt-1 text-gray-500">သိမ်းဆည်းပြီး</p>
+            </div>
+            <div class="text-center px-2">
+                <div class="rounded-full w-10 h-10 flex items-center justify-center mx-auto">
+                    <i class="fas fa-plus text-gray-500"></i>
+                </div>
+                <p class="text-xs mt-1 text-gray-500">ပါဝင်ရန်</p>
+            </div>
+            <div class="text-center px-2">
+                <div class="rounded-full w-10 h-10 flex items-center justify-center mx-auto">
+                    <i class="fas fa-briefcase text-gray-500"></i>
+                </div>
+                <p class="text-xs mt-1 text-gray-500">စီးပွားရေး</p>
+            </div>
+        </div>
+    </div>
+
     <script>
-        let map;
-        let markers = [];
-        let geocoder;
-        
         function initMap() {
-            // ကမ္ဘာလုံး၏ အလယ်ဗဟိုတွင် စတင်ကြည့်ရှုရန် ဦးတည်ချက်
-            const defaultLocation = { lat: 20, lng: 0 };
+            // Default coordinates (using Yangon as default)
+            const defaultLocation = { lat: 16.8661, lng: 96.1951 };
             
-            // Google Maps ကို စတင်သတ်မှတ်ခြင်း
-            map = new google.maps.Map(document.getElementById("map"), {
+            const map = new google.maps.Map(document.getElementById("map"), {
                 center: defaultLocation,
-                zoom: 3,  // ကမ္ဘာလုံးကို မြင်နိုင်ရန် ချုံ့ထားခြင်း
-                mapTypeControl: true,
+                zoom: 15,
+                mapTypeControl: false,
+                streetViewControl: false,
                 fullscreenControl: false,
+                zoomControl: false,
             });
-            
-            // Geocoder ကို စတင်သတ်မှတ်ခြင်း
-            geocoder = new google.maps.Geocoder();
-            
-            // ရှာဖွေရေး လုပ်ဆောင်မှုကို သတ်မှတ်ခြင်း
+
+            // Add search functionality
             const searchInput = document.getElementById("search-input");
-            const searchResults = document.getElementById("search-results");
+            const searchBox = new google.maps.places.SearchBox(searchInput);
             
-            // အသုံးပြုသူက စာရိုက်တဲ့အခါ အကြံပြုချက်များ ပြသခြင်း
-            searchInput.addEventListener("input", function() {
-                const query = this.value;
+            searchBox.addListener("places_changed", () => {
+                const places = searchBox.getPlaces();
                 
-                if (query.length < 2) {
-                    searchResults.style.display = "none";
-                    return;
-                }
+                if (places.length === 0) return;
                 
-                // Geocoder ကိုသုံး၍ နေရာရှာဖွေခြင်း
-                geocoder.geocode({ address: query }, (results, status) => {
-                    if (status === "OK" && results.length > 0) {
-                        searchResults.innerHTML = "";
-                        
-                        // အကြံပြုချက် ၅ ခုကို ပြသခြင်း
-                        const limitedResults = results.slice(0, 5);
-                        
-                        limitedResults.forEach((result, index) => {
-                            const resultItem = document.createElement("div");
-                            resultItem.className = "result-item";
-                            resultItem.textContent = result.formatted_address;
-                            
-                            resultItem.addEventListener("click", function() {
-                                // အသုံးပြုသူ ရွေးချယ်တဲ့နေရာကို မြေပုံပေါ်တွင် ပြသခြင်း
-                                searchInput.value = result.formatted_address;
-                                searchResults.style.display = "none";
-                                
-                                const location = result.geometry.location;
-                                map.setCenter(location);
-                                map.setZoom(12);
-                                
-                                // အခြားမာကာများကို ဖယ်ရှားခြင်း
-                                clearMarkers();
-                                
-                                // ရွေးချယ်ထားသောနေရာတွင် မာကာတင်ခြင်း
-                                addMarker(location, result.formatted_address);
-                            });
-                            
-                            searchResults.appendChild(resultItem);
-                        });
-                        
-                        searchResults.style.display = "block";
+                const bounds = new google.maps.LatLngBounds();
+                
+                places.forEach((place) => {
+                    if (!place.geometry || !place.geometry.location) return;
+                    
+                    // Add marker
+                    new google.maps.Marker({
+                        map,
+                        position: place.geometry.location,
+                    });
+                    
+                    if (place.geometry.viewport) {
+                        bounds.union(place.geometry.viewport);
+                    } else {
+                        bounds.extend(place.geometry.location);
                     }
                 });
+                
+                map.fitBounds(bounds);
             });
             
-            // ရှာဖွေရေးအကွက်ပြင်ပတွင် နှိပ်တဲ့အခါ အကြံပြုချက်များကို ပျောက်ကွယ်စေခြင်း
-            document.addEventListener("click", function(e) {
-                if (!searchResults.contains(e.target) && e.target !== searchInput) {
-                    searchResults.style.display = "none";
-                }
-            });
-            
-            // ဇွန်လုပ်ဆောင်ချက်များ
-            document.getElementById("zoom-in").addEventListener("click", () => {
-                map.setZoom(map.getZoom() + 1);
-            });
-            
-            document.getElementById("zoom-out").addEventListener("click", () => {
-                map.setZoom(map.getZoom() - 1);
-            });
-            
-            // သင့်တည်နေရာကို ရှာဖွေသောလုပ်ဆောင်ချက်
-            document.getElementById("my-location").addEventListener("click", () => {
+            // Add location button functionality
+            document.querySelector(".location-button").addEventListener("click", () => {
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(
                         (position) => {
@@ -201,18 +234,21 @@
                                 lat: position.coords.latitude,
                                 lng: position.coords.longitude,
                             };
-                            
                             map.setCenter(pos);
-                            map.setZoom(15);
+                            map.setZoom(17);
                             
-                            clearMarkers();
-                            addMarker(pos, "သင့်တည်နေရာ", true);
-                            
-                            // ဤတည်နေရာအတွက် လိပ်စာလိုက်ရှာခြင်း
-                            geocoder.geocode({ location: pos }, (results, status) => {
-                                if (status === "OK" && results[0]) {
-                                    searchInput.value = results[0].formatted_address;
-                                }
+                            // Add marker for current location
+                            new google.maps.Marker({
+                                position: pos,
+                                map: map,
+                                icon: {
+                                    path: google.maps.SymbolPath.CIRCLE,
+                                    scale: 10,
+                                    fillColor: "#4285F4",
+                                    fillOpacity: 1,
+                                    strokeColor: "#FFFFFF",
+                                    strokeWeight: 2,
+                                },
                             });
                         },
                         () => {
@@ -220,47 +256,24 @@
                         }
                     );
                 } else {
-                    alert("သင့်ဘရောက်ဇာသည် တည်နေရာရှာဖွေခြင်းကို ထောက်ပံ့မထားပါ။");
+                    alert("သင့်ဘရောက်ဇာသည် Geolocation ကို ထောက်ပံ့မထားပါ။");
                 }
             });
-        }
-        
-        // မာကာတင်ခြင်းလုပ်ဆောင်ချက်
-        function addMarker(position, title, isCurrentLocation = false) {
-            const marker = new google.maps.Marker({
-                position: position,
-                map: map,
-                title: title,
-                animation: google.maps.Animation.DROP,
-                icon: isCurrentLocation ? {
-                    path: google.maps.SymbolPath.CIRCLE,
-                    scale: 10,
-                    fillColor: "#4285F4",
-                    fillOpacity: 1,
-                    strokeColor: "#FFFFFF",
-                    strokeWeight: 2,
-                } : null
-            });
             
-            markers.push(marker);
-            
-            // အချက်အလက် ဝင်းဒိုး
-            const infoWindow = new google.maps.InfoWindow({
-                content: `<div style="font-weight: bold">${title}</div>`
+            // Add category filter functionality
+            const categoryItems = document.querySelectorAll(".category-item");
+            categoryItems.forEach((item) => {
+                item.addEventListener("click", function() {
+                    const categoryText = this.querySelector("span").textContent;
+                    searchInput.value = categoryText;
+                    
+                    // Simulate search
+                    const event = new Event("places_changed");
+                    searchBox.dispatchEvent(event);
+                });
             });
-            
-            marker.addListener("click", () => {
-                infoWindow.open(map, marker);
-            });
-        }
-        
-        // မာကာများဖယ်ရှားခြင်း
-        function clearMarkers() {
-            markers.forEach(marker => marker.setMap(null));
-            markers = [];
         }
     </script>
-    <!-- Google Maps API ကို လုပ်ဆောင်ခြင်း - သင့်ကိုယ်ပိုင် API Key ကို ထည့်သွင်းရန် လိုအပ်ပါတယ် -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDI9QayA38zpkwpGVCFtUQ3WxUkgpwFvEk&libraries=places&callback=initMap&language=my" async defer></script>
 </body>
 </html>
