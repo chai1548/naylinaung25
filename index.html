@@ -3,212 +3,436 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Search by Weight</title>
+    <title>Firebase Data Viewer</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
         }
-        .search-container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        h1 {
-            color: #333;
+        .header {
+            background-color: #FF6B3C;
+            color: white;
+            padding: 15px;
             text-align: center;
         }
-        .search-box {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+        .container {
+            padding: 20px;
         }
-        .form-group {
-            display: flex;
-            flex-direction: column;
+        .tab-container {
+            margin-bottom: 20px;
         }
-        label {
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        select, input {
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
-        }
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 12px;
+        .tab-button {
+            background-color: #f1f1f1;
             border: none;
-            border-radius: 4px;
+            outline: none;
             cursor: pointer;
-            font-size: 16px;
-            margin-top: 10px;
+            padding: 10px 20px;
+            margin-right: 5px;
+            transition: 0.3s;
+            border-radius: 5px 5px 0 0;
         }
-        button:hover {
-            background-color: #45a049;
+        .tab-button:hover {
+            background-color: #ddd;
         }
-        .results {
-            margin-top: 20px;
+        .tab-button.active {
+            background-color: #FF6B3C;
+            color: white;
+        }
+        .tab-content {
             display: none;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 0 5px 5px 5px;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-        th, td {
+        .data-card {
             border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        th {
-            background-color: #f2f2f2;
+        .category-header {
+            cursor: pointer;
+            padding: 10px;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .price-details {
+            margin-left: 20px;
+        }
+        .admin-controls {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+        }
+        .login-form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .warning-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
         }
     </style>
 </head>
 <body>
-    <div class="search-container">
-        <h1>Product Search by Weight</h1>
-        <div class="search-box">
-            <div class="form-group">
-                <label for="product-type">Product Type:</label>
-                <select id="product-type">
-                    <option value="food">Food Products</option>
-                    <option value="cosmetics">Cosmetics</option>
-                    <option value="electronics">Electronics</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="weight">Weight (kg):</label>
-                <input type="number" id="weight" min="1" step="0.1" placeholder="Enter weight in kg">
-            </div>
-            
-            <button onclick="searchProducts()">Search</button>
+    <div class="header">
+        <h1>Firebase Data Viewer</h1>
+    </div>
+
+    <div class="container">
+        <div class="warning-message">
+            <i class="fas fa-exclamation-triangle"></i> Your security rules are defined as public, so anyone can steal, modify, or access your data. Please update your security rules.
         </div>
-        
-        <div id="results" class="results">
-            <h2>Search Results</h2>
-            <div id="result-content"></div>
+
+        <div id="login-section">
+            <div class="login-form">
+                <h3 class="text-center mb-4">Login</h3>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" placeholder="Enter your email">
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Enter your password">
+                </div>
+                <div class="d-grid gap-2">
+                    <button class="btn btn-primary" id="login-btn">Login</button>
+                    <button class="btn btn-secondary" id="guest-btn">Continue as Guest</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="app-section" style="display: none;">
+            <div class="tab-container">
+                <button class="tab-button active" onclick="openTab('user-tab')">User View</button>
+                <button class="tab-button" onclick="openTab('admin-tab')" id="admin-tab-btn" style="display: none;">Admin View</button>
+            </div>
+
+            <div id="user-tab" class="tab-content" style="display: block;">
+                <h2>Available Products</h2>
+                <div class="mb-3">
+                    <select id="filter-category" class="form-select">
+                        <option value="all">All Categories</option>
+                        <option value="Cosmetic">Cosmetic</option>
+                        <option value="Electronic">Electronic</option>
+                        <option value="Food">Food</option>
+                    </select>
+                </div>
+                
+                <div id="user-data-container"></div>
+            </div>
+
+            <div id="admin-tab" class="tab-content">
+                <h2>Admin Dashboard</h2>
+                <div class="mb-3">
+                    <button class="btn btn-success mb-3" id="add-category-btn">
+                        <i class="fas fa-plus"></i> Add New Category
+                    </button>
+                </div>
+                
+                <div id="admin-data-container"></div>
+            </div>
         </div>
     </div>
 
+    <!-- Firebase App (the core Firebase SDK) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.22.2/firebase-app-compat.min.js"></script>
+    <!-- Firebase Database -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.22.2/firebase-database-compat.min.js"></script>
+    <!-- Firebase Auth -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.22.2/firebase-auth-compat.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
     <script>
-        function searchProducts() {
-            const productType = document.getElementById('product-type').value;
-            const weight = document.getElementById('weight').value;
+        // Firebase configuration - Replace with your Firebase config
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            databaseURL: "https://onlineshop-849c8.firebaseio.com", // Update with your database URL
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const auth = firebase.auth();
+
+        // Authentication state change
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                // Check if user is admin (you would need to set this in your database)
+                checkIfAdmin(user.uid);
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('app-section').style.display = 'block';
+            }
+        });
+
+        // Login functionality
+        document.getElementById('login-btn').addEventListener('click', () => {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
             
-            if (!weight || weight <= 0) {
-                alert("Please enter a valid weight");
-                return;
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // Successfully logged in
+                })
+                .catch((error) => {
+                    alert('Login failed: ' + error.message);
+                });
+        });
+
+        // Guest login
+        document.getElementById('guest-btn').addEventListener('click', () => {
+            document.getElementById('login-section').style.display = 'none';
+            document.getElementById('app-section').style.display = 'block';
+            loadUserData();
+        });
+
+        // Check if user is admin
+        function checkIfAdmin(userId) {
+            // For demo purposes, let's assume anyone logged in can be admin
+            // In a real app, you would check against a list of admin UIDs
+            document.getElementById('admin-tab-btn').style.display = 'inline-block';
+            loadAdminData();
+            loadUserData();
+        }
+
+        // Tab functionality
+        function openTab(tabName) {
+            const tabContents = document.getElementsByClassName('tab-content');
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].style.display = 'none';
             }
             
-            // In a real application, you would fetch data from a server/database
-            // Here we'll simulate some results based on the PDF data
-            
-            let results = "";
-            const resultsDiv = document.getElementById('result-content');
-            const resultsContainer = document.getElementById('results');
-            
-            // Clear previous results
-            resultsDiv.innerHTML = "";
-            
-            // Based on product type, show different results
-            if (productType === "food") {
-                results = `
-                    <h3>Food Products - ${weight} kg</h3>
-                    <p>Estimated shipping prices from Myanmar to Bangkok:</p>
-                    <table>
-                        <tr>
-                            <th>Service</th>
-                            <th>Price (THB)</th>
-                        </tr>
-                        <tr>
-                            <td>Standard Delivery</td>
-                            <td>${calculatePrice(weight, 75, 140, 210, 280, 350)}</td>
-                        </tr>
-                        <tr>
-                            <td>Express Delivery</td>
-                            <td>${calculatePrice(weight, 85, 160, 240, 320, 400)}</td>
-                        </tr>
-                        <tr>
-                            <td>Priority Delivery</td>
-                            <td>${calculatePrice(weight, 90, 170, 255, 340, 425)}</td>
-                        </tr>
-                    </table>
-                    <p><small>Note: Prices are estimates based on available data. Actual prices may vary.</small></p>
-                `;
-            } 
-            else if (productType === "cosmetics") {
-                results = `
-                    <h3>Cosmetics - ${weight} kg</h3>
-                    <p>Estimated shipping prices from Myanmar to Bangkok:</p>
-                    <table>
-                        <tr>
-                            <th>Service</th>
-                            <th>Price (THB)</th>
-                        </tr>
-                        <tr>
-                            <td>Standard Delivery</td>
-                            <td>${calculatePrice(weight, 70, 160, 240, 320, 400)}</td>
-                        </tr>
-                        <tr>
-                            <td>Express Delivery</td>
-                            <td>${calculatePrice(weight, 80, 180, 270, 360, 450)}</td>
-                        </tr>
-                        <tr>
-                            <td>Priority Delivery</td>
-                            <td>${calculatePrice(weight, 85, 190, 285, 380, 475)}</td>
-                        </tr>
-                    </table>
-                    <p><small>Note: Cosmetics may require additional FDA documentation.</small></p>
-                `;
-            } 
-            else if (productType === "electronics") {
-                results = `
-                    <h3>Electronics - ${weight} kg</h3>
-                    <p>Estimated shipping prices from Myanmar to Bangkok:</p>
-                    <table>
-                        <tr>
-                            <th>Service</th>
-                            <th>New Items (THB)</th>
-                            <th>Used Items (THB)</th>
-                        </tr>
-                        <tr>
-                            <td>Standard Delivery</td>
-                            <td>${calculatePrice(weight, 800, 900, 1800, 2000, 2500)}</td>
-                            <td>${calculatePrice(weight, 500, 700, 1400, 1600, 2000)}</td>
-                        </tr>
-                    </table>
-                    <p><small>Note: Electronics may require special handling and insurance.</small></p>
-                `;
+            const tabButtons = document.getElementsByClassName('tab-button');
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].className = tabButtons[i].className.replace(' active', '');
             }
             
-            resultsDiv.innerHTML = results;
-            resultsContainer.style.display = "block";
+            document.getElementById(tabName).style.display = 'block';
+            event.currentTarget.className += ' active';
         }
-        
-        // Helper function to calculate price based on weight tiers
-        function calculatePrice(weight, price1, price2, price3, price4, price5) {
-            weight = parseFloat(weight);
+
+        // Load data for user view
+        function loadUserData() {
+            const dataContainer = document.getElementById('user-data-container');
+            dataContainer.innerHTML = '<div class="text-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>';
             
-            if (weight <= 1) return price1;
-            if (weight <= 2) return price2;
-            if (weight <= 3) return price3;
-            if (weight <= 4) return price4;
-            if (weight <= 5) return price5;
-            
-            // For weights above 5kg, use a per-kg rate
-            const perKgRate = price5 / 5;
-            return Math.round(weight * perKgRate);
+            database.ref('/').once('value')
+                .then((snapshot) => {
+                    const data = snapshot.val();
+                    dataContainer.innerHTML = '';
+                    
+                    if (!data) {
+                        dataContainer.innerHTML = '<p>No data available.</p>';
+                        return;
+                    }
+                    
+                    // Process the data
+                    for (const category in data) {
+                        if (typeof data[category] === 'object') {
+                            createCategoryCard(category, data[category], dataContainer, false);
+                        }
+                    }
+                    
+                    // Setup category filter
+                    document.getElementById('filter-category').addEventListener('change', filterCategories);
+                })
+                .catch((error) => {
+                    dataContainer.innerHTML = `<p>Error loading data: ${error.message}</p>`;
+                });
         }
+
+        // Load data for admin view
+        function loadAdminData() {
+            const dataContainer = document.getElementById('admin-data-container');
+            dataContainer.innerHTML = '<div class="text-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>';
+            
+            database.ref('/').once('value')
+                .then((snapshot) => {
+                    const data = snapshot.val();
+                    dataContainer.innerHTML = '';
+                    
+                    if (!data) {
+                        dataContainer.innerHTML = '<p>No data available.</p>';
+                        return;
+                    }
+                    
+                    // Process the data
+                    for (const category in data) {
+                        if (typeof data[category] === 'object') {
+                            createCategoryCard(category, data[category], dataContainer, true);
+                        }
+                    }
+                    
+                    // Setup add category button
+                    document.getElementById('add-category-btn').addEventListener('click', addNewCategory);
+                })
+                .catch((error) => {
+                    dataContainer.innerHTML = `<p>Error loading data: ${error.message}</p>`;
+                });
+        }
+
+        // Create a card for each category
+        function createCategoryCard(category, data, container, isAdmin) {
+            const card = document.createElement('div');
+            card.className = 'data-card';
+            card.dataset.category = data.type || category;
+            
+            const header = document.createElement('div');
+            header.className = 'category-header';
+            header.innerHTML = `<h4><i class="fas fa-chevron-down"></i> ${category}</h4>`;
+            header.addEventListener('click', toggleCategoryDetails);
+            card.appendChild(header);
+            
+            const detailsDiv = document.createElement('div');
+            detailsDiv.className = 'price-details';
+            
+            // Add type if available
+            if (data.type) {
+                detailsDiv.innerHTML += `<p><strong>Type:</strong> ${data.type}</p>`;
+            }
+            
+            // Add pricing information
+            if (data.BKK) {
+                detailsDiv.innerHTML += `<p><strong>Bangkok:</strong> ${data.BKK}</p>`;
+            }
+            
+            if (data.Kg) {
+                detailsDiv.innerHTML += `<p><strong>Price per Kg:</strong> ${data.Kg}</p>`;
+            }
+            
+            if (data.OtherCity) {
+                detailsDiv.innerHTML += `<p><strong>Other Cities:</strong> ${data.OtherCity}</p>`;
+            }
+            
+            if (data.RemoteArea) {
+                detailsDiv.innerHTML += `<p><strong>Remote Areas:</strong> ${data.RemoteArea}</p>`;
+            }
+            
+            // Add admin controls if in admin view
+            if (isAdmin) {
+                const adminControls = document.createElement('div');
+                adminControls.className = 'admin-controls';
+                adminControls.innerHTML = `
+                    <button class="btn btn-sm btn-primary me-2" onclick="editCategory('${category}')">
+                        <i class="fas fa-edit"></i> Edit
+                    </button>
+                    <button class="btn btn-sm btn-danger" onclick="deleteCategory('${category}')">
+                        <i class="fas fa-trash"></i> Delete
+                    </button>
+                `;
+                detailsDiv.appendChild(adminControls);
+            }
+            
+            card.appendChild(detailsDiv);
+            container.appendChild(card);
+        }
+
+        // Toggle category details
+        function toggleCategoryDetails(event) {
+            const detailsDiv = event.currentTarget.nextElementSibling;
+            const icon = event.currentTarget.querySelector('i');
+            
+            if (detailsDiv.style.display === 'none') {
+                detailsDiv.style.display = 'block';
+                icon.className = 'fas fa-chevron-down';
+            } else {
+                detailsDiv.style.display = 'none';
+                icon.className = 'fas fa-chevron-right';
+            }
+        }
+
+        // Filter categories in user view
+        function filterCategories() {
+            const selectedCategory = document.getElementById('filter-category').value;
+            const cards = document.querySelectorAll('#user-data-container .data-card');
+            
+            cards.forEach(card => {
+                if (selectedCategory === 'all' || card.dataset.category === selectedCategory) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Admin functions
+        function addNewCategory() {
+            const categoryName = prompt('Enter new category name:');
+            if (!categoryName) return;
+            
+            const categoryData = {
+                type: categoryName,
+                BKK: '0',
+                Kg: '0',
+                OtherCity: '0',
+                RemoteArea: '0'
+            };
+            
+            database.ref(`/${categoryName}`).set(categoryData)
+                .then(() => {
+                    alert('Category added successfully!');
+                    loadAdminData();
+                })
+                .catch((error) => {
+                    alert('Error adding category: ' + error.message);
+                });
+        }
+
+        function editCategory(category) {
+            // In a real app, you'd open a modal with a form
+            alert('Edit functionality would open a form to edit ' + category);
+            // For demo purposes, we'll just update one value
+            const newValue = prompt(`Enter new BKK value for ${category}:`);
+            if (!newValue) return;
+            
+            database.ref(`/${category}/BKK`).set(newValue)
+                .then(() => {
+                    alert('Category updated successfully!');
+                    loadAdminData();
+                    loadUserData();
+                })
+                .catch((error) => {
+                    alert('Error updating category: ' + error.message);
+                });
+        }
+
+        function deleteCategory(category) {
+            const confirm = window.confirm(`Are you sure you want to delete ${category}?`);
+            if (!confirm) return;
+            
+            database.ref(`/${category}`).remove()
+                .then(() => {
+                    alert('Category deleted successfully!');
+                    loadAdminData();
+                    loadUserData();
+                })
+                .catch((error) => {
+                    alert('Error deleting category: ' + error.message);
+                });
+        }
+
+        // Initialize by attempting to load user data
+        document.addEventListener('DOMContentLoaded', () => {
+            // This will only show data after login or guest access
+        });
     </script>
 </body>
 </html>
