@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Myanmar Shipping Price Calculator</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Noto Sans Myanmar', sans-serif;
+        }
+        
+        .custom-select {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.5rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+        }
+        
+        .price-card {
+            transition: all 0.3s ease;
+        }
+        
+        .price-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex items-center justify-center">
+                <i class="fas fa-shipping-fast text-3xl mr-3"></i>
+                <h1 class="text-3xl font-bold">Myanmar Shipping Price Calculator</h1>
+            </div>
+            <p class="text-center mt-2 text-blue-100">အမျိုးအစား၊ အရွယ်အစားနှင့် ဒေသအလိုက် ကုန်စည်းပို့ဆောင်ခ တွက်ချက်ရန်</p>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container mx-auto px-4 py-8">
+        <!-- Filter Section -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                <i class="fas fa-filter mr-2 text-blue-600"></i>
+                Filter Options
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+                <!-- Item Type Filter -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">ပစ္စည်းအမျိုးအစား</label>
+                    <select id="itemType" class="w-full px-3 py-2 border border-gray-300 rounded-md custom-select focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="">အားလုံး</option>
+                        <option value="မြင်းကျားအိတ်">မြင်းကျားအိတ်</option>
+                        <option value="ကော်ပုံး Square">ကော်ပုံး Square</option>
+                        <option value="ကော်ပုံး Circle">ကော်ပုံး Circle</option>
+                        <option value="ခရီးဆောင်အိတ်">ခရီးဆောင်အိတ်</option>
+                        <option value="ဂျပ်ဖါ">ဂျပ်ဖါ</option>
+                        <option value="ပီနံ(ဖြူ)">ပီနံ(ဖြူ)</option>
+                        <option value="ရေခဲသတ္တာ">ရေခဲသတ္တာ</option>
+                        <option value="TV">TV</option>
+                    </select>
+                </div>
+
+                <!-- Size Filter -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">အရွယ်အစား</label>
+                    <select id="itemSize" class="w-full px-3 py-2 border border-gray-300 rounded-md custom-select focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="">အားလုံး</option>
+                    </select>
+                </div>
+
+                <!-- Region Filter -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">ဒေသ</label>
+                    <select id="region" class="w-full px-3 py-2 border border-gray-300 rounded-md custom-select focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="">အားလုံး</option>
+                        <option value="BKK-KYN">BKK-KYN</option>
+                        <option value="BKK-MON">BKK-MON</option>
+                        <option value="BKK-TNY">BKK-TNY</option>
+                        <option value="YGN">YGN</option>
+                        <option value="MDY">MDY</option>
+                    </select>
+                </div>
+
+                <!-- Sort Filter -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">ဈေးနှုန်းအစီအစဉ်</label>
+                    <select id="priceSort" class="w-full px-3 py-2 border border-gray-300 rounded-md custom-select focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="">မူလအတိုင်း</option>
+                        <option value="asc">အနည်းဆုံးမှ အများဆုံး</option>
+                        <option value="desc">အများဆုံးမှ အနည်းဆုံး</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Search and Clear -->
+            <div class="flex flex-col sm:flex-row gap-4">
+                <div class="flex-1">
+                    <div class="relative">
+                        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                        <input type="text" id="searchBox" placeholder="ရှာဖွေရန် ရိုက်ထည့်ပါ..." 
+                               class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                </div>
+                <button id="clearFilters" class="px-6 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors">
+                    <i class="fas fa-times mr-2"></i>Clear All Filters
+                </button>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-semibold text-gray-800 flex items-center">
+                    <i class="fas fa-list mr-2 text-green-600"></i>
+                    ရလဒ်များ
+                </h2>
+                <span id="resultCount" class="text-sm text-gray-600">0 ရလဒ်</span>
+            </div>
+            
+            <div id="resultsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Results will be populated here -->
+            </div>
+            
+            <div id="noResults" class="text-center py-12 hidden">
+                <i class="fas fa-search text-6xl text-gray-300 mb-4"></i>
+                <p class="text-gray-500 text-lg">ကိုက်ညီသော ရလဒ်များ မတွေ့ရှိပါ</p>
+                <p class="text-gray-400 text-sm mt-2">Filter များကို ပြန်လည်စစ်ဆေးပြီး ပြန်လည်ကြိုးစားကြည့်ပါ</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Shipping data structure
+        const shippingData = [
+            // BKK-KYN - မြဝတီ
+            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'မြင်းကျားအိတ်', size: 'S', dimensions: '60cmx50cmx30cm', weight: '25kg', price: 1000 },
+            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'မြင်းကျားအိတ်', size: 'M', dimensions: '80cmx70cmx35cm', weight: '30kg', price: 1100 },
+            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'မြင်းကျားအိတ်', size: 'L', dimensions: '100cmx70cmx35cm', weight: '35kg', price: 1200 },
+            
+            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ကော်ပုံး Square', size: 'S', dimensions: '70cmx45cmx41cm', weight: '25kg', price: 1000 },
+            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ကော်ပုံး Square', size: 'M', dimensions: '71cmx49cmx42cm', weight: '30kg', price: 1100 },
+            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ကော်ပုံး Square', size: 'L', dimensions: '79cmx58cmx51cm', weight: '35kg', price: 1200 },
+            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ကော်ပုံး Square', size: 'XL', dimensions: '85cmx61cmx55cm', weight: '40kg', price: 1500 },
+            
+            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ကော်ပုံး Circle', size: 'S', dimensions: '30cmx32cm', weight: '25kg', price: 2000 },
+            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ကော်ပုံး Circle', size: 'M', dimensions: '58cmx60cm', weight: '30kg', price: 2200 },
+            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ကော်ပုံး Circle', size: 'L', dimensions: '74cmx67cm', weight: '35kg', price: 2400 },
+            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ကော်ပုံး Circle', size: 'XL', dimensions: '84cmx75cm', weight: '40kg', price: 2700 },
+            
+            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ခရီးဆောင်အိတ်', size: 'S', weight: '20kg', price: 900 },
+            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ခရီးဆောင်အိတ်', size: 'M', weight: '25kg', price: 1000 },
+            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ခရီးဆောင်အိတ်', size: 'L', weight: '30kg', price: 1100 },
+            
+            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ဂျပ်ဖါ', size: 'S', weight: '25kg', price: 1000 },
+            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ဂျပ်ဖါ', size: 'M', weight: '30kg', price: 1100 },
+            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ဂျပ်ဖါ', size: 'L', weight: '35kg', price: 1200 },
+            
+            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ပီနံ(ဖြူ)', size: 'S', weight: '25kg', price: 2000 },
+            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ပီနံ(ဖြူ)', size: 'M', weight: '30kg', price: 2200 },
+            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ပီနံ(ဖြူ)', size: 'L', weight: '35kg', price: 2400 },
+            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ပီနံ(ဖြူ)', size: 'XL', weight: '40kg', price: 2700 },
+            
+            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ရေခဲသတ္တာ', size: '1 Door', price: 2100 },
+            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ရေခဲသတ္တာ', size: '2 Door', price: 2400 },
+            
+            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'TV', size: '32"', price: 1500 },
+            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'TV', size: '42"', price: 2300 },
+            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'TV', size: '55"', price: 3300 },
+            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'TV', size: '60"', price: 3500 },
+
+            // BKK-KYN - ဘားအံ/မြိုင်ကလေး
+            { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'မြင်းကျားအိတ်', size: 'S', dimensions: '60cmx50cmx30cm', weight: '25kg', price: 1200 },
+            { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'မြင်းကျားအိတ်', size: 'M', dimensions: '80cmx70cmx35cm', weight: '30kg', price: 1300 },
+            { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'မြင်းကျားအိတ်', size: 'L', dimensions: '100cmx70cmx35cm', weight: '35kg', price: 1400 },
+            
+            { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'ကော်ပုံး Square', size: 'S', dimensions: '70cmx45cmx41cm', weight: '25kg', price: 1200 },
+            { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'ကော်ပုံး Square', size: 'M', dimensions: '71cmx49cmx42cm', weight: '30kg', price: 1300 },
+            { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'ကော်ပုံး Square', size: 'L', dimensions: '79cmx58cmx51cm', weight: '35kg', price: 1400 },
+            { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'ကော်ပုံး Square', size: 'XL', dimensions: '85cmx61cmx55cm', weight: '40kg', price: 1700 },
+            
+            { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'ကော်ပုံး Circle', size: 'S', dimensions: '30cmx32cm', weight: '25kg', price: 2200 },
+            { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'ကော်ပုံး Circle', size: 'M', dimensions: '58cmx60cm', weight: '30kg', price: 2400 },
+            { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'ကော်ပုံး Circle', size: 'L', dimensions: '74cmx67cm', weight: '35kg', price: 2600 },
+            { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'ကော်ပုံး Circle', size: 'XL', dimensions: '84cmx75cm', weight: '40kg', price: 2900 },
+
+            // YGN - ရုံးထုတ်
+            { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'မြင်းကျားအိတ်', size: 'S', dimensions: '60cmx50cmx30cm', weight: '25kg', price: 1600 },
+            { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'မြင်းကျားအိတ်', size: 'M', dimensions: '80cmx70cmx35cm', weight: '30kg', price: 1700 },
+            { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'မြင်းကျားအိတ်', size: 'L', dimensions: '100cmx70cmx35cm', weight: '35kg', price: 1800 },
+            
+            { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'TV', size: '32"', price: 1800 },
+            { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'TV', size: '42"', price: 2500 },
+            { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'TV', size: '55"', price: 3500 },
+            { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'TV', size: '60"', price: 3800 },
+
+            // MDY - ရုံးထုတ်
+            { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'မြင်းကျားအိတ်', size: 'S', dimensions: '60cmx50cmx30cm', weight: '25kg', price: 1850 },
+            { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'မြင်းကျားအိတ်', size: 'M', dimensions: '80cmx70cmx35cm', weight: '30kg', price: 1950 },
+            { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'မြင်းကျားအိတ်', size: 'L', dimensions: '100cmx70cmx35cm', weight: '35kg', price: 2050 },
+            
+            { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'TV', size: '32"', price: 2100 },
+            { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'TV', size: '42"', price: 2800 },
+            { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'TV', size: '55"', price: 3800 },
+            { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'TV', size: '60"', price: 4100 },
+
+            // BKK-MON Sample data
+            { region: 'BKK-MON', location: 'သထုံ/ဘီလင်း/ကျိုက်ထို', itemType: 'မြင်းကျားအိတ်', size: 'S', price: 1600 },
+            { region: 'BKK-MON', location: 'သထုံ/ဘီလင်း/ကျိုက်ထို', itemType: 'မြင်းကျားအိတ်', size: 'M', price: 1700 },
+            { region: 'BKK-MON', location: 'သထုံ/ဘီလင်း/ကျိုက်ထို', itemType: 'မြင်းကျားအိတ်', size: 'L', price: 1800 },
+            
+            // BKK-TNY Sample data
+            { region: 'BKK-TNY', location: 'ရေး-ထားဝယ်-မြိတ်', itemType: 'မြင်းကျားအိတ်', size: 'S', price: 1900 },
+            { region: 'BKK-TNY', location: 'ရေး-ထားဝယ်-မြိတ်', itemType: 'မြင်းကျားအိတ်', size: 'M', price: 2000 },
+            { region: 'BKK-TNY', location: 'ရေး-ထားဝယ်-မြိတ်', itemType: 'မြင်းကျားအိတ်', size: 'L', price: 2100 },
+        ];
+
+        // Size options for different item types
+        const sizeOptions = {
+            'မြင်းကျားအိတ်': ['S', 'M', 'L'],
+            'ကော်ပုံး Square': ['S', 'M', 'L', 'XL'],
+            'ကော်ပုံး Circle': ['S', 'M', 'L', 'XL'],
+            'ခရီးဆောင်အိတ်': ['S', 'M', 'L'],
+            'ဂျပ်ဖါ': ['S', 'M', 'L'],
+            'ပီနံ(ဖြူ)': ['S', 'M', 'L', 'XL'],
+            'ရေခဲသတ္တာ': ['1 Door', '2 Door'],
+            'TV': ['32"', '42"', '55"', '60"']
+        };
+
+        let filteredData = [...shippingData];
+
+        // DOM elements
+        const itemTypeSelect = document.getElementById('itemType');
+        const itemSizeSelect = document.getElementById('itemSize');
+        const regionSelect = document.getElementById('region');
+        const priceSortSelect = document.getElementById('priceSort');
+        const searchBox = document.getElementById('searchBox');
+        const clearFiltersBtn = document.getElementById('clearFilters');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const resultCount = document.getElementById('resultCount');
+        const noResults = document.getElementById('noResults');
+
+        // Initialize
+        function init() {
+            updateSizeOptions();
+            filterAndDisplayResults();
+            
+            // Event listeners
+            itemTypeSelect.addEventListener('change', () => {
+                updateSizeOptions();
+                filterAndDisplayResults();
+            });
+            itemSizeSelect.addEventListener('change', filterAndDisplayResults);
+            regionSelect.addEventListener('change', filterAndDisplayResults);
+            priceSortSelect.addEventListener('change', filterAndDisplayResults);
+            searchBox.addEventListener('input', filterAndDisplayResults);
+            clearFiltersBtn.addEventListener('click', clearAllFilters);
+        }
+
+        // Update size options based on selected item type
+        function updateSizeOptions() {
+            const selectedType = itemTypeSelect.value;
+            itemSizeSelect.innerHTML = '<option value="">အားလုံး</option>';
+            
+            if (selectedType && sizeOptions[selectedType]) {
+                sizeOptions[selectedType].forEach(size => {
+                    const option = document.createElement('option');
+                    option.value = size;
+                    option.textContent = size;
+                    itemSizeSelect.appendChild(option);
+                });
+            } else {
+                // Show all sizes if no specific type selected
+                const allSizes = [...new Set(Object.values(sizeOptions).flat())];
+                allSizes.forEach(size => {
+                    const option = document.createElement('option');
+                    option.value = size;
+                    option.textContent = size;
+                    itemSizeSelect.appendChild(option);
+                });
+            }
+        }
+
+        // Filter and display results
+        function filterAndDisplayResults() {
+            const itemType = itemTypeSelect.value;
+            const itemSize = itemSizeSelect.value;
+            const region = regionSelect.value;
+            const searchTerm = searchBox.value.toLowerCase();
+
+            // Filter data
+            filteredData = shippingData.filter(item => {
+                return (!itemType || item.itemType === itemType) &&
+                       (!itemSize || item.size === itemSize) &&
+                       (!region || item.region === region) &&
+                       (!searchTerm || 
+                        item.itemType.toLowerCase().includes(searchTerm) ||
+                        item.location.toLowerCase().includes(searchTerm) ||
+                        item.region.toLowerCase().includes(searchTerm) ||
+                        (item.size && item.size.toLowerCase().includes(searchTerm)));
+            });
+
+            // Sort data
+            const sortOrder = priceSortSelect.value;
+            if (sortOrder === 'asc') {
+                filteredData.sort((a, b) => a.price - b.price);
+            } else if (sortOrder === 'desc') {
+                filteredData.sort((a, b) => b.price - a.price);
+            }
+
+            // Display results
+            displayResults();
+        }
+
+        // Display results
+        function displayResults() {
+            resultsContainer.innerHTML = '';
+            resultCount.textContent = `${filteredData.length} ရလဒ်`;
+
+            if (filteredData.length === 0) {
+                noResults.classList.remove('hidden');
+                return;
+            }
+
+            
+            noResults.classList.add('hidden');
+
+            filteredData.forEach((item, index) => {
+                const card = createResultCard(item, index);
+                resultsContainer.appendChild(card);
+            });
+        }
+
+        // Create result card
+        function createResultCard(item, index) {
+            const card = document.createElement('div');
+            card.className = 'price-card bg-gradient-to-br from-white to-gray-50 border border-gray-200 rounded-lg p-4 hover:shadow-lg transition-all fade-in';
+            card.style.animationDelay = `${index * 0.1}s`;
+
+            const dimensionsInfo = item.dimensions ? `<p class="text-xs text-gray-500 mt-1">အရွယ်: ${item.dimensions}</p>` : '';
+            const weightInfo = item.weight ? `<p class="text-xs text-gray-500">အလေးချိန်: ${item.weight}</p>` : '';
+
+            card.innerHTML = `
+                <div class="flex justify-between items-start mb-3">
+                    <div class="flex-1">
+                        <h3 class="font-semibold text-lg text-gray-800 flex items-center">
+                            ${getItemIcon(item.itemType)}
+                            ${item.itemType}
+                        </h3>
+                        <p class="text-sm text-gray-600 mt-1">
+                            <i class="fas fa-map-marker-alt mr-1 text-red-500"></i>
+                            ${item.region} - ${item.location}
+                        </p>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-2xl font-bold text-green-600">${item.price.toLocaleString()}</span>
+                        <p class="text-sm text-gray-500">ကျပ်</p>
+                    </div>
+                </div>
+                
+                <div class="border-t pt-3">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
+                                ${item.size}
+                            </span>
+                        </div>
+                        <div class="text-right text-xs text-gray-500">
+                            ${dimensionsInfo}
+                            ${weightInfo}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            return card;
+        }
+
+        // Get icon for item type
+        function getItemIcon(itemType) {
+            const icons = {
+                'မြင်းကျားအိတ်': '<i class="fas fa-shopping-bag mr-2 text-brown-600"></i>',
+                'ကော်ပုံး Square': '<i class="fas fa-cube mr-2 text-orange-600"></i>',
+                'ကော်ပုံး Circle': '<i class="fas fa-circle mr-2 text-orange-600"></i>',
+                'ခရီးဆောင်အိတ်': '<i class="fas fa-suitcase mr-2 text-purple-600"></i>',
+                'ဂျပ်ဖါ': '<i class="fas fa-box mr-2 text-yellow-600"></i>',
+                'ပီနံ(ဖြူ)': '<i class="fas fa-cube mr-2 text-gray-600"></i>',
+                'ရေခဲသတ္တာ': '<i class="fas fa-snowflake mr-2 text-blue-600"></i>',
+                'TV': '<i class="fas fa-tv mr-2 text-indigo-600"></i>'
+            };
+            return icons[itemType] || '<i class="fas fa-box mr-2 text-gray-600"></i>';
+        }
+
+        // Clear all filters
+        function clearAllFilters() {
+            itemTypeSelect.value = '';
+            itemSizeSelect.value = '';
+            regionSelect.value = '';
+            priceSortSelect.value = '';
+            searchBox.value = '';
+            updateSizeOptions();
+            filterAndDisplayResults();
+        }
+
+        // Initialize the application
+        init();
+    </script>
+</body>
+</html>
