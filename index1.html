@@ -148,7 +148,7 @@
 
     <script>
         // Shipping data structure
-        const shippingData = [
+const shippingData = [
     // BKK-KYN - မြဝတီ
     { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'မြင်းကျားအိတ်', size: 'S', dimensions: '60cmx50cmx30cm', weight: '25 kg', price: 1000 },
     { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'မြင်းကျားအိတ်', size: 'M', dimensions: '80cmx70cmx35cm', weight: '30 kg', price: 1100 },
@@ -329,7 +329,6 @@
     { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'TV', size: '55"', price: 3500 },
     { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'TV', size: '60"', price: 3800 },
 
-    
     // YGN - အိမ်အရောက်
     { region: 'YGN', location: 'အိမ်အရောက်', itemType: 'မြင်းကျားအိတ်', size: 'S', dimensions: '60cmx50cmx30cm', weight: '25 kg', price: 1700 },
     { region: 'YGN', location: 'အိမ်အရောက်', itemType: 'မြင်းကျားအိတ်', size: 'M', dimensions: '80cmx70cmx35cm', weight: '30 kg', price: 1800 },
@@ -433,6 +432,42 @@
     { region: 'YGN', location: 'ပဲးခူးတိုင်း', itemType: 'ရေခဲသတ္တာ', size: '1 Door', price: 3500 },
     { region: 'YGN', location: 'ပဲးခူးတိုင်း', itemType: 'ရေခဲသတ္တာ', size: '2 Door', price: 3800 },
     
+    { region: 'YGN', location: 'ပဲးခူးတိုင်း', itemType: 'TV', size: '32"', price: 2100 },
+    { region: 'YGN', location: 'ပဲးခူးတိုင်း', itemType: 'TV', size: '42"', price: 2800 },
+    { region: 'YGN', location: 'ပဲးခူးတိုင်း', itemType: 'TV', size: '55"', price: 3800 },
+    { region: 'YGN', location: 'ပဲးခူးတိုင်း', itemType: 'TV', size: '60"', price: 4100 },
+
+    // YGN - နေပြည်တော်
+    { region: 'YGN', location: 'နေပြည်တော်', itemType: 'မြင်းကျားအိတ်', size: 'S', dimensions: '60cmx50cmx30cm', weight: '25 kg', price: 1850 },
+    { region: 'YGN', location: 'နေပြည်တော်', itemType: 'မြင်းကျားအိတ်', size: 'M', dimensions: '80cmx70cmx35cm', weight: '30 kg', price: 1950 },
+    { region: 'YGN', location: 'နေပြည်တော်', itemType: 'မြင်းကျားအိတ်', size: 'L', dimensions: '100cmx70cmx35cm', weight: '35 kg', price: 2050 },
+    
+    { region: 'YGN', location: 'နေပြည်တော်', itemType: 'ကော်ပုံး Square', size: 'S', dimensions: '70cmx45cmx41cm', weight: '25 kg', price: 1850 },
+    { region: 'YGN', location: 'နေပြည်တော်', itemType: 'ကော်ပုံး Square', size: 'M', dimensions: '71cmx49cmx42cm', weight: '30 kg', price: 1950 },
+    { region: 'YGN', location: 'နေပြည်တော်', itemType: 'ကော်ပုံး Square', size: 'L', dimensions: '79cmx58cmx51cm', weight: '35 kg', price: 2050 },
+    { region: 'YGN', location: 'နေပြည်တော်', itemType: 'ကော်ပုံး Square', size: 'XL', dimensions: '85cmx61cmx55cm', weight: '40 kg', price: 2700 },
+    
+    { region: 'YGN', location: 'နေပြည်တော်', itemType: 'ကော်ပုံး Circle', size: 'S', dimensions: '30cmx32cm', weight: '25 kg', price: 2050 },
+    { region: 'YGN', location: 'နေပြည်တော်', itemType: 'ကော်ပုံး Circle', size: 'M', dimensions: '58cmx60cm', weight: '30 kg', price: 2450 },
+    { region: 'YGN', location: 'နေပြည်တော်', itemType: 'ကော်ပုံး Circle', size: 'L', dimensions: '74cmx67cm', weight: '35 kg', price: 3850 },
+    { region: 'YGN', location: 'နေပြည်တော်', itemType: 'ကော်ပုံး Circle', size: 'XL', dimensions: '84cmx75cm', weight: '40 kg', price: 4250 },
+    
+    { region: 'YGN', location: 'နေပြည်တော်', itemType: 'ခရီးဆောင်အိတ်', size: 'S', weight: '20 kg', price: 1750 },
+    { region: 'YGN', location: 'နေပြည်တော်', itemType: 'ခရီးဆောင်အိတ်', size: 'M', weight: '25 kg', price: 1850 },
+    { region: 'YGN', location: 'နေပြည်တော်', itemType: 'ခရီးဆောင်အိတ်', size: 'L', weight: '30 kg', price: 1950 },
+    
+    { region: 'YGN', location: 'နေပြည်တော်', itemType: 'ဂျပ်ဖါ', size: 'S', weight: '25 kg', price: 1850 },
+    { region: 'YGN', location: 'နေပြည်တော်', itemType: 'ဂျပ်ဖါ', size: 'M', weight: '30 kg', price: 1950 },
+    { region: 'YGN', location: 'နေပြည်တော်', itemType: 'ဂျပ်ဖါ', size: 'L', weight: '35 kg', price: 2050 },
+    
+    { region: 'YGN', location: 'နေပြည်တော်', itemType: 'ပီနံ(ဖြူ)', size: 'S', weight: '25 kg', price: 2050 },
+    { region: 'YGN', location: 'နေပြည်တော်', itemType: 'ပီနံ(ဖြူ)', size: 'M', weight: '30 kg', price: 2450 },
+    { region: 'YGN', location: 'နေပြည်တော်', itemType: 'ပီနံ(ဖြူ)', size: 'L', weight: '35 kg', price: 3050 },
+    { region: 'YGN', location: 'နေပြည်တော်', itemType: 'ပီနံ(ဖြူ)', size: 'XL', weight: '40 kg', price: 3750 },
+    
+    { region: 'YGN', location: 'နေပြည်တော်', itemType: 'ရေခဲသတ္တာ', size: '1 Door', price: 3550 },
+    { region: 'YGN', location: 'နေပြည်တော်', itemType: 'ရေခဲသတ္တာ', size: '2 Door', price: 3850 },
+    
     { region: 'YGN', location: 'နေပြည်တော်', itemType: 'TV', size: '32"', price: 2100 },
     { region: 'YGN', location: 'နေပြည်တော်', itemType: 'TV', size: '42"', price: 2800 },
     { region: 'YGN', location: 'နေပြည်တော်', itemType: 'TV', size: '55"', price: 3800 },
@@ -473,7 +508,6 @@
     { region: 'YGN', location: 'ရှမ်းပြည်နယ်', itemType: 'TV', size: '42"', price: 2800 },
     { region: 'YGN', location: 'ရှမ်းပြည်နယ်', itemType: 'TV', size: '55"', price: 3800 },
     { region: 'YGN', location: 'ရှမ်းပြည်နယ်', itemType: 'TV', size: '60"', price: 4100 },
-            
 
     // YGN - မကွေးတိုင်း
     { region: 'YGN', location: 'မကွေးတိုင်း', itemType: 'မြင်းကျားအိတ်', size: 'S', dimensions: '60cmx50cmx30cm', weight: '25 kg', price: 1900 },
@@ -510,7 +544,8 @@
     { region: 'YGN', location: 'မကွေးတိုင်း', itemType: 'TV', size: '42"', price: 2800 },
     { region: 'YGN', location: 'မကွေးတိုင်း', itemType: 'TV', size: '55"', price: 3800 },
     { region: 'YGN', location: 'မကွေးတိုင်း', itemType: 'TV', size: '60"', price: 4100 },
-              // YGN - ဧရာဝတီတိုင်း
+
+    // YGN - ဧရာဝတီတိုင်း
     { region: 'YGN', location: 'ဧရာဝတီတိုင်း', itemType: 'မြင်းကျားအိတ်', size: 'S', dimensions: '60cmx50cmx30cm', weight: '25 kg', price: 1900 },
     { region: 'YGN', location: 'ဧရာဝတီတိုင်း', itemType: 'မြင်းကျားအိတ်', size: 'M', dimensions: '80cmx70cmx35cm', weight: '30 kg', price: 2000 },
     { region: 'YGN', location: 'ဧရာဝတီတိုင်း', itemType: 'မြင်းကျားအိတ်', size: 'L', dimensions: '100cmx70cmx35cm', weight: '35 kg', price: 2100 },
@@ -617,7 +652,8 @@
     { region: 'YGN', location: 'မန္တလေးတိုင်း', itemType: 'TV', size: '42"', price: 2800 },
     { region: 'YGN', location: 'မန္တလေးတိုင်း', itemType: 'TV', size: '55"', price: 3800 },
     { region: 'YGN', location: 'မန္တလေးတိုင်း', itemType: 'TV', size: '60"', price: 4100 },
-// MDY - ရုံးထုတ်
+
+    // MDY - ရုံးထုတ်
     { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'မြင်းကျားအိတ်', size: 'S', dimensions: '60cmx50cmx30cm', weight: '25 kg', price: 1850 },
     { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'မြင်းကျားအိတ်', size: 'M', dimensions: '80cmx70cmx35cm', weight: '30 kg', price: 1950 },
     { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'မြင်းကျားအိတ်', size: 'L', dimensions: '100cmx70cmx35cm', weight: '35 kg', price: 2050 },
