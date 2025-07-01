@@ -149,100 +149,582 @@
     <script>
         // Shipping data structure
         const shippingData = [
-            // BKK-KYN - မြဝတီ
-            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'မြင်းကျားအိတ်', size: 'S', dimensions: '60cmx50cmx30cm', weight: '25kg', price: 1000 },
-            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'မြင်းကျားအိတ်', size: 'M', dimensions: '80cmx70cmx35cm', weight: '30kg', price: 1100 },
-            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'မြင်းကျားအိတ်', size: 'L', dimensions: '100cmx70cmx35cm', weight: '35kg', price: 1200 },
-            
-            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ကော်ပုံး Square', size: 'S', dimensions: '70cmx45cmx41cm', weight: '25kg', price: 1000 },
-            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ကော်ပုံး Square', size: 'M', dimensions: '71cmx49cmx42cm', weight: '30kg', price: 1100 },
-            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ကော်ပုံး Square', size: 'L', dimensions: '79cmx58cmx51cm', weight: '35kg', price: 1200 },
-            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ကော်ပုံး Square', size: 'XL', dimensions: '85cmx61cmx55cm', weight: '40kg', price: 1500 },
-            
-            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ကော်ပုံး Circle', size: 'S', dimensions: '30cmx32cm', weight: '25kg', price: 2000 },
-            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ကော်ပုံး Circle', size: 'M', dimensions: '58cmx60cm', weight: '30kg', price: 2200 },
-            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ကော်ပုံး Circle', size: 'L', dimensions: '74cmx67cm', weight: '35kg', price: 2400 },
-            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ကော်ပုံး Circle', size: 'XL', dimensions: '84cmx75cm', weight: '40kg', price: 2700 },
-            
-            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ခရီးဆောင်အိတ်', size: 'S', weight: '20kg', price: 900 },
-            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ခရီးဆောင်အိတ်', size: 'M', weight: '25kg', price: 1000 },
-            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ခရီးဆောင်အိတ်', size: 'L', weight: '30kg', price: 1100 },
-            
-            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ဂျပ်ဖါ', size: 'S', weight: '25kg', price: 1000 },
-            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ဂျပ်ဖါ', size: 'M', weight: '30kg', price: 1100 },
-            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ဂျပ်ဖါ', size: 'L', weight: '35kg', price: 1200 },
-            
-            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ပီနံ(ဖြူ)', size: 'S', weight: '25kg', price: 2000 },
-            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ပီနံ(ဖြူ)', size: 'M', weight: '30kg', price: 2200 },
-            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ပီနံ(ဖြူ)', size: 'L', weight: '35kg', price: 2400 },
-            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ပီနံ(ဖြူ)', size: 'XL', weight: '40kg', price: 2700 },
-            
-            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ရေခဲသတ္တာ', size: '1 Door', price: 2100 },
-            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ရေခဲသတ္တာ', size: '2 Door', price: 2400 },
-            
-            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'TV', size: '32"', price: 1500 },
-            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'TV', size: '42"', price: 2300 },
-            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'TV', size: '55"', price: 3300 },
-            { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'TV', size: '60"', price: 3500 },
+    // BKK-KYN - မြဝတီ
+    { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'မြင်းကျားအိတ်', size: 'S', dimensions: '60cmx50cmx30cm', weight: '25 kg', price: 1000 },
+    { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'မြင်းကျားအိတ်', size: 'M', dimensions: '80cmx70cmx35cm', weight: '30 kg', price: 1100 },
+    { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'မြင်းကျားအိတ်', size: 'L', dimensions: '100cmx70cmx35cm', weight: '35 kg', price: 1200 },
+    
+    { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ကော်ပုံး Square', size: 'S', dimensions: '70cmx45cmx41cm', weight: '25 kg', price: 1000 },
+    { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ကော်ပုံး Square', size: 'M', dimensions: '71cmx49cmx42cm', weight: '30 kg', price: 1100 },
+    { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ကော်ပုံး Square', size: 'L', dimensions: '79cmx58cmx51cm', weight: '35 kg', price: 1200 },
+    { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ကော်ပုံး Square', size: 'XL', dimensions: '85cmx61cmx55cm', weight: '40 kg', price: 1500 },
+    
+    { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ကော်ပုံး Circle', size: 'S', dimensions: '30cmx32cm', weight: '25 kg', price: 2000 },
+    { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ကော်ပုံး Circle', size: 'M', dimensions: '58cmx60cm', weight: '30 kg', price: 2200 },
+    { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ကော်ပုံး Circle', size: 'L', dimensions: '74cmx67cm', weight: '35 kg', price: 2400 },
+    { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ကော်ပုံး Circle', size: 'XL', dimensions: '84cmx75cm', weight: '40 kg', price: 2700 },
+    
+    { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ခရီးဆောင်အိတ်', size: 'S', weight: '20 kg', price: 900 },
+    { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ခရီးဆောင်အိတ်', size: 'M', weight: '25 kg', price: 1000 },
+    { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ခရီးဆောင်အိတ်', size: 'L', weight: '30 kg', price: 1100 },
+    
+    { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ဂျပ်ဖါ', size: 'S', weight: '25 kg', price: 1000 },
+    { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ဂျပ်ဖါ', size: 'M', weight: '30 kg', price: 1100 },
+    { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ဂျပ်ဖါ', size: 'L', weight: '35 kg', price: 1200 },
+    
+    { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ပီနံ(ဖြူ)', size: 'S', weight: '25 kg', price: 2000 },
+    { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ပီနံ(ဖြူ)', size: 'M', weight: '30 kg', price: 2200 },
+    { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ပီနံ(ဖြူ)', size: 'L', weight: '35 kg', price: 2400 },
+    { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ပီနံ(ဖြူ)', size: 'XL', weight: '40 kg', price: 2700 },
+    
+    { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ရေခဲသတ္တာ', size: '1 Door', price: 2100 },
+    { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'ရေခဲသတ္တာ', size: '2 Door', price: 2400 },
+    
+    { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'TV', size: '32"', price: 1500 },
+    { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'TV', size: '42"', price: 2300 },
+    { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'TV', size: '55"', price: 3300 },
+    { region: 'BKK-KYN', location: 'မြဝတီ', itemType: 'TV', size: '60"', price: 3500 },
 
-            // BKK-KYN - ဘားအံ/မြိုင်ကလေး
-            { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'မြင်းကျားအိတ်', size: 'S', dimensions: '60cmx50cmx30cm', weight: '25kg', price: 1200 },
-            { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'မြင်းကျားအိတ်', size: 'M', dimensions: '80cmx70cmx35cm', weight: '30kg', price: 1300 },
-            { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'မြင်းကျားအိတ်', size: 'L', dimensions: '100cmx70cmx35cm', weight: '35kg', price: 1400 },
-            
-            { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'ကော်ပုံး Square', size: 'S', dimensions: '70cmx45cmx41cm', weight: '25kg', price: 1200 },
-            { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'ကော်ပုံး Square', size: 'M', dimensions: '71cmx49cmx42cm', weight: '30kg', price: 1300 },
-            { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'ကော်ပုံး Square', size: 'L', dimensions: '79cmx58cmx51cm', weight: '35kg', price: 1400 },
-            { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'ကော်ပုံး Square', size: 'XL', dimensions: '85cmx61cmx55cm', weight: '40kg', price: 1700 },
-            
-            { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'ကော်ပုံး Circle', size: 'S', dimensions: '30cmx32cm', weight: '25kg', price: 2200 },
-            { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'ကော်ပုံး Circle', size: 'M', dimensions: '58cmx60cm', weight: '30kg', price: 2400 },
-            { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'ကော်ပုံး Circle', size: 'L', dimensions: '74cmx67cm', weight: '35kg', price: 2600 },
-            { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'ကော်ပုံး Circle', size: 'XL', dimensions: '84cmx75cm', weight: '40kg', price: 2900 },
+    // BKK-KYN - ဘားအံ/မြိုင်ကလေး
+    { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'မြင်းကျားအိတ်', size: 'S', dimensions: '60cmx50cmx30cm', weight: '25 kg', price: 1200 },
+    { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'မြင်းကျားအိတ်', size: 'M', dimensions: '80cmx70cmx35cm', weight: '30 kg', price: 1300 },
+    { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'မြင်းကျားအိတ်', size: 'L', dimensions: '100cmx70cmx35cm', weight: '35 kg', price: 1400 },
+    
+    { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'ကော်ပုံး Square', size: 'S', dimensions: '70cmx45cmx41cm', weight: '25 kg', price: 1200 },
+    { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'ကော်ပုံး Square', size: 'M', dimensions: '71cmx49cmx42cm', weight: '30 kg', price: 1300 },
+    { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'ကော်ပုံး Square', size: 'L', dimensions: '79cmx58cmx51cm', weight: '35 kg', price: 1400 },
+    { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'ကော်ပုံး Square', size: 'XL', dimensions: '85cmx61cmx55cm', weight: '40 kg', price: 1700 },
+    
+    { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'ကော်ပုံး Circle', size: 'S', dimensions: '30cmx32cm', weight: '25 kg', price: 2200 },
+    { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'ကော်ပုံး Circle', size: 'M', dimensions: '58cmx60cm', weight: '30 kg', price: 2400 },
+    { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'ကော်ပုံး Circle', size: 'L', dimensions: '74cmx67cm', weight: '35 kg', price: 2600 },
+    { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'ကော်ပုံး Circle', size: 'XL', dimensions: '84cmx75cm', weight: '40 kg', price: 2900 },
+    
+    { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'ခရီးဆောင်အိတ်', size: 'S', weight: '20 kg', price: 1100 },
+    { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'ခရီးဆောင်အိတ်', size: 'M', weight: '25 kg', price: 1200 },
+    { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'ခရီးဆောင်အိတ်', size: 'L', weight: '30 kg', price: 1300 },
+    
+    { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'ဂျပ်ဖါ', size: 'S', weight: '25 kg', price: 1200 },
+    { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'ဂျပ်ဖါ', size: 'M', weight: '30 kg', price: 1300 },
+    { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'ဂျပ်ဖါ', size: 'L', weight: '35 kg', price: 1400 },
+    
+    { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'ပီနံ(ဖြူ)', size: 'S', weight: '25 kg', price: 2200 },
+    { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'ပီနံ(ဖြူ)', size: 'M', weight: '30 kg', price: 2400 },
+    { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'ပီနံ(ဖြူ)', size: 'L', weight: '35 kg', price: 2600 },
+    { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'ပီနံ(ဖြူ)', size: 'XL', weight: '40 kg', price: 2900 },
+    
+    { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'ရေခဲသတ္တာ', size: '1 Door', price: 2300 },
+    { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'ရေခဲသတ္တာ', size: '2 Door', price: 2600 },
+    
+    { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'TV', size: '32"', price: 1700 },
+    { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'TV', size: '42"', price: 2500 },
+    { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'TV', size: '55"', price: 3500 },
+    { region: 'BKK-KYN', location: 'ဘားအံ/မြိုင်ကလေး', itemType: 'TV', size: '60"', price: 3700 },
 
-            // YGN - ရုံးထုတ်
-            { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'မြင်းကျားအိတ်', size: 'S', dimensions: '60cmx50cmx30cm', weight: '25kg', price: 1600 },
-            { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'မြင်းကျားအိတ်', size: 'M', dimensions: '80cmx70cmx35cm', weight: '30kg', price: 1700 },
-            { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'မြင်းကျားအိတ်', size: 'L', dimensions: '100cmx70cmx35cm', weight: '35kg', price: 1800 },
+    // BKK-MON - သထုံ/ဘီလင်း/ကျိုက်ထို
+    { region: 'BKK-MON', location: 'သထုံ/ဘီလင်း/ကျိုက်ထို', itemType: 'မြင်းကျားအိတ်', size: 'S', dimensions: '60cmx50cmx30cm', weight: '25 kg', price: 1600 },
+    { region: 'BKK-MON', location: 'သထုံ/ဘီလင်း/ကျိုက်ထို', itemType: 'မြင်းကျားအိတ်', size: 'M', dimensions: '80cmx70cmx35cm', weight: '30 kg', price: 1700 },
+    { region: 'BKK-MON', location: 'သထုံ/ဘီလင်း/ကျိုက်ထို', itemType: 'မြင်းကျားအိတ်', size: 'L', dimensions: '100cmx70cmx35cm', weight: '35 kg', price: 1800 },
+    
+    { region: 'BKK-MON', location: 'သထုံ/ဘီလင်း/ကျိုက်ထို', itemType: 'ကော်ပုံး Square', size: 'S', dimensions: '70cmx45cmx41cm', weight: '25 kg', price: 1600 },
+    { region: 'BKK-MON', location: 'သထုံ/ဘီလင်း/ကျိုက်ထို', itemType: 'ကော်ပုံး Square', size: 'M', dimensions: '71cmx49cmx42cm', weight: '30 kg', price: 1700 },
+    { region: 'BKK-MON', location: 'သထုံ/ဘီလင်း/ကျိုက်ထို', itemType: 'ကော်ပုံး Square', size: 'L', dimensions: '79cmx58cmx51cm', weight: '35 kg', price: 1800 },
+    { region: 'BKK-MON', location: 'သထုံ/ဘီလင်း/ကျိုက်ထို', itemType: 'ကော်ပုံး Square', size: 'XL', dimensions: '85cmx61cmx55cm', weight: '40 kg', price: 1900 },
+    
+    { region: 'BKK-MON', location: 'သထုံ/ဘီလင်း/ကျိုက်ထို', itemType: 'ကော်ပုံး Circle', size: 'S', dimensions: '30cmx32cm', weight: '25 kg', price: 1800 },
+    { region: 'BKK-MON', location: 'သထုံ/ဘီလင်း/ကျိုက်ထို', itemType: 'ကော်ပုံး Circle', size: 'M', dimensions: '58cmx60cm', weight: '30 kg', price: 2200 },
+    { region: 'BKK-MON', location: 'သထုံ/ဘီလင်း/ကျိုက်ထို', itemType: 'ကော်ပုံး Circle', size: 'L', dimensions: '74cmx67cm', weight: '35 kg', price: 3600 },
+    { region: 'BKK-MON', location: 'သထုံ/ဘီလင်း/ကျိုက်ထို', itemType: 'ကော်ပုံး Circle', size: 'XL', dimensions: '84cmx75cm', weight: '40 kg', price: 4000 },
+    
+    { region: 'BKK-MON', location: 'သထုံ/ဘီလင်း/ကျိုက်ထို', itemType: 'ခရီးဆောင်အိတ်', size: 'S', weight: '20 kg', price: 1500 },
+    { region: 'BKK-MON', location: 'သထုံ/ဘီလင်း/ကျိုက်ထို', itemType: 'ခရီးဆောင်အိတ်', size: 'M', weight: '25 kg', price: 1600 },
+    { region: 'BKK-MON', location: 'သထုံ/ဘီလင်း/ကျိုက်ထို', itemType: 'ခရီးဆောင်အိတ်', size: 'L', weight: '30 kg', price: 1700 },
+    
+    { region: 'BKK-MON', location: 'သထုံ/ဘီလင်း/ကျိုက်ထို', itemType: 'ဂျပ်ဖါ', size: 'S', weight: '25 kg', price: 1600 },
+    { region: 'BKK-MON', location: 'သထုံ/ဘီလင်း/ကျိုက်ထို', itemType: 'ဂျပ်ဖါ', size: 'M', weight: '30 kg', price: 1700 },
+    { region: 'BKK-MON', location: 'သထုံ/ဘီလင်း/ကျိုက်ထို', itemType: 'ဂျပ်ဖါ', size: 'L', weight: '35 kg', price: 1800 },
+    
+    { region: 'BKK-MON', location: 'သထုံ/ဘီလင်း/ကျိုက်ထို', itemType: 'ပီနံ(ဖြူ)', size: 'S', weight: '25 kg', price: 1800 },
+    { region: 'BKK-MON', location: 'သထုံ/ဘီလင်း/ကျိုက်ထို', itemType: 'ပီနံ(ဖြူ)', size: 'M', weight: '30 kg', price: 2200 },
+    { region: 'BKK-MON', location: 'သထုံ/ဘီလင်း/ကျိုက်ထို', itemType: 'ပီနံ(ဖြူ)', size: 'L', weight: '35 kg', price: 2800 },
+    { region: 'BKK-MON', location: 'သထုံ/ဘီလင်း/ကျိုက်ထို', itemType: 'ပီနံ(ဖြူ)', size: 'XL', weight: '40 kg', price: 3500 },
+    
+    { region: 'BKK-MON', location: 'သထုံ/ဘီလင်း/ကျိုက်ထို', itemType: 'ရေခဲသတ္တာ', size: '1 Door', price: 3300 },
+    { region: 'BKK-MON', location: 'သထုံ/ဘီလင်း/ကျိုက်ထို', itemType: 'ရေခဲသတ္တာ', size: '2 Door', price: 3900 },
+    
+    { region: 'BKK-MON', location: 'သထုံ/ဘီလင်း/ကျိုက်ထို', itemType: 'TV', size: '32"', price: 1800 },
+    { region: 'BKK-MON', location: 'သထုံ/ဘီလင်း/ကျိုက်ထို', itemType: 'TV', size: '42"', price: 2500 },
+    { region: 'BKK-MON', location: 'သထုံ/ဘီလင်း/ကျိုက်ထို', itemType: 'TV', size: '55"', price: 3500 },
+    { region: 'BKK-MON', location: 'သထုံ/ဘီလင်း/ကျိုက်ထို', itemType: 'TV', size: '60"', price: 3800 },
+
+    // BKK-TNY - ရေး-ထားဝယ်-မြိတ်
+    { region: 'BKK-TNY', location: 'ရေး-ထားဝယ်-မြိတ်', itemType: 'မြင်းကျားအိတ်', size: 'S', dimensions: '60cmx50cmx30cm', weight: '25 kg', price: 1900 },
+    { region: 'BKK-TNY', location: 'ရေး-ထားဝယ်-မြိတ်', itemType: 'မြင်းကျားအိတ်', size: 'M', dimensions: '80cmx70cmx35cm', weight: '30 kg', price: 2000 },
+    { region: 'BKK-TNY', location: 'ရေး-ထားဝယ်-မြိတ်', itemType: 'မြင်းကျားအိတ်', size: 'L', dimensions: '100cmx70cmx35cm', weight: '35 kg', price: 2100 },
+    
+    { region: 'BKK-TNY', location: 'ရေး-ထားဝယ်-မြိတ်', itemType: 'ကော်ပုံး Square', size: 'S', dimensions: '70cmx45cmx41cm', weight: '25 kg', price: 1900 },
+    { region: 'BKK-TNY', location: 'ရေး-ထားဝယ်-မြိတ်', itemType: 'ကော်ပုံး Square', size: 'M', dimensions: '71cmx49cmx42cm', weight: '30 kg', price: 2000 },
+    { region: 'BKK-TNY', location: 'ရေး-ထားဝယ်-မြိတ်', itemType: 'ကော်ပုံး Square', size: 'L', dimensions: '79cmx58cmx51cm', weight: '35 kg', price: 2100 },
+    { region: 'BKK-TNY', location: 'ရေး-ထားဝယ်-မြိတ်', itemType: 'ကော်ပုံး Square', size: 'XL', dimensions: '85cmx61cmx55cm', weight: '40 kg', price: 2500 },
+    
+    { region: 'BKK-TNY', location: 'ရေး-ထားဝယ်-မြိတ်', itemType: 'ကော်ပုံး Circle', size: 'S', dimensions: '30cmx32cm', weight: '25 kg', price: 2100 },
+    { region: 'BKK-TNY', location: 'ရေး-ထားဝယ်-မြိတ်', itemType: 'ကော်ပုံး Circle', size: 'M', dimensions: '58cmx60cm', weight: '30 kg', price: 2500 },
+    { region: 'BKK-TNY', location: 'ရေး-ထားဝယ်-မြိတ်', itemType: 'ကော်ပုံး Circle', size: 'L', dimensions: '74cmx67cm', weight: '35 kg', price: 3900 },
+    { region: 'BKK-TNY', location: 'ရေး-ထားဝယ်-မြိတ်', itemType: 'ကော်ပုံး Circle', size: 'XL', dimensions: '84cmx75cm', weight: '40 kg', price: 4300 },
+    
+    { region: 'BKK-TNY', location: 'ရေး-ထားဝယ်-မြိတ်', itemType: 'ခရီးဆောင်အိတ်', size: 'S', weight: '20 kg', price: 1800 },
+    { region: 'BKK-TNY', location: 'ရေး-ထားဝယ်-မြိတ်', itemType: 'ခရီးဆောင်အိတ်', size: 'M', weight: '25 kg', price: 1900 },
+    { region: 'BKK-TNY', location: 'ရေး-ထားဝယ်-မြိတ်', itemType: 'ခရီးဆောင်အိတ်', size: 'L', weight: '30 kg', price: 2000 },
+    
+    { region: 'BKK-TNY', location: 'ရေး-ထားဝယ်-မြိတ်', itemType: 'ဂျပ်ဖါ', size: 'S', weight: '25 kg', price: 1900 },
+    { region: 'BKK-TNY', location: 'ရေး-ထားဝယ်-မြိတ်', itemType: 'ဂျပ်ဖါ', size: 'M', weight: '30 kg', price: 2000 },
+    { region: 'BKK-TNY', location: 'ရေး-ထားဝယ်-မြိတ်', itemType: 'ဂျပ်ဖါ', size: 'L', weight: '35 kg', price: 2100 },
+    
+    { region: 'BKK-TNY', location: 'ရေး-ထားဝယ်-မြိတ်', itemType: 'ပီနံ(ဖြူ)', size: 'S', weight: '25 kg', price: 2100 },
+    { region: 'BKK-TNY', location: 'ရေး-ထားဝယ်-မြိတ်', itemType: 'ပီနံ(ဖြူ)', size: 'M', weight: '30 kg', price: 2500 },
+    { region: 'BKK-TNY', location: 'ရေး-ထားဝယ်-မြိတ်', itemType: 'ပီနံ(ဖြူ)', size: 'L', weight: '35 kg', price: 3100 },
+    { region: 'BKK-TNY', location: 'ရေး-ထားဝယ်-မြိတ်', itemType: 'ပီနံ(ဖြူ)', size: 'XL', weight: '40 kg', price: 3800 },
+    
+    { region: 'BKK-TNY', location: 'ရေး-ထားဝယ်-မြိတ်', itemType: 'ရေခဲသတ္တာ', size: '1 Door', price: 3600 },
+    { region: 'BKK-TNY', location: 'ရေး-ထားဝယ်-မြိတ်', itemType: 'ရေခဲသတ္တာ', size: '2 Door', price: 3900 },
+    
+    { region: 'BKK-TNY', location: 'ရေး-ထားဝယ်-မြိတ်', itemType: 'TV', size: '32"', price: 2100 },
+    { region: 'BKK-TNY', location: 'ရေး-ထားဝယ်-မြိတ်', itemType: 'TV', size: '42"', price: 2800 },
+    { region: 'BKK-TNY', location: 'ရေး-ထားဝယ်-မြိတ်', itemType: 'TV', size: '55"', price: 3800 },
+    { region: 'BKK-TNY', location: 'ရေး-ထားဝယ်-မြိတ်', itemType: 'TV', size: '60"', price: 4100 },
+
+    // YGN - ရုံးထုတ်
+    { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'မြင်းကျားအိတ်', size: 'S', dimensions: '60cmx50cmx30cm', weight: '25 kg', price: 1600 },
+    { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'မြင်းကျားအိတ်', size: 'M', dimensions: '80cmx70cmx35cm', weight: '30 kg', price: 1700 },
+    { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'မြင်းကျားအိတ်', size: 'L', dimensions: '100cmx70cmx35cm', weight: '35 kg', price: 1800 },
+    
+    { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'ကော်ပုံး Square', size: 'S', dimensions: '70cmx45cmx41cm', weight: '25 kg', price: 1600 },
+    { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'ကော်ပုံး Square', size: 'M', dimensions: '71cmx49cmx42cm', weight: '30 kg', price: 1700 },
+    { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'ကော်ပုံး Square', size: 'L', dimensions: '79cmx58cmx51cm', weight: '35 kg', price: 1800 },
+    { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'ကော်ပုံး Square', size: 'XL', dimensions: '85cmx61cmx55cm', weight: '40 kg', price: 2500 },
+    
+    { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'ကော်ပုံး Circle', size: 'S', dimensions: '30cmx32cm', weight: '25 kg', price: 1800 },
+    { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'ကော်ပုံး Circle', size: 'M', dimensions: '58cmx60cm', weight: '30 kg', price: 2200 },
+    { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'ကော်ပုံး Circle', size: 'L', dimensions: '74cmx67cm', weight: '35 kg', price: 3600 },
+    { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'ကော်ပုံး Circle', size: 'XL', dimensions: '84cmx75cm', weight: '40 kg', price: 4000 },
+    
+    { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'ခရီးဆောင်အိတ်', size: 'S', weight: '20 kg', price: 1500 },
+    { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'ခရီးဆောင်အိတ်', size: 'M', weight: '25 kg', price: 1600 },
+    { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'ခရီးဆောင်အိတ်', size: 'L', weight: '30 kg', price: 1700 },
+    
+    { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'ဂျပ်ဖါ', size: 'S', weight: '25 kg', price: 1600 },
+    { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'ဂျပ်ဖါ', size: 'M', weight: '30 kg', price: 1700 },
+    { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'ဂျပ်ဖါ', size: 'L', weight: '35 kg', price: 1800 },
+    
+    { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'ပီနံ(ဖြူ)', size: 'S', weight: '25 kg', price: 1800 },
+    { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'ပီနံ(ဖြူ)', size: 'M', weight: '30 kg', price: 2200 },
+    { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'ပီနံ(ဖြူ)', size: 'L', weight: '35 kg', price: 2800 },
+    { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'ပီနံ(ဖြူ)', size: 'XL', weight: '40 kg', price: 3500 },
+    
+    { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'ရေခဲသတ္တာ', size: '1 Door', price: 3300 },
+    { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'ရေခဲသတ္တာ', size: '2 Door', price: 3600 },
+    
+    { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'TV', size: '32"', price: 1800 },
+    { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'TV', size: '42"', price: 2500 },
+    { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'TV', size: '55"', price: 3500 },
+    { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'TV', size: '60"', price: 3800 },
+
+    
+    // YGN - အိမ်အရောက်
+    { region: 'YGN', location: 'အိမ်အရောက်', itemType: 'မြင်းကျားအိတ်', size: 'S', dimensions: '60cmx50cmx30cm', weight: '25 kg', price: 1700 },
+    { region: 'YGN', location: 'အိမ်အရောက်', itemType: 'မြင်းကျားအိတ်', size: 'M', dimensions: '80cmx70cmx35cm', weight: '30 kg', price: 1800 },
+    { region: 'YGN', location: 'အိမ်အရောက်', itemType: 'မြင်းကျားအိတ်', size: 'L', dimensions: '100cmx70cmx35cm', weight: '35 kg', price: 1900 },
+    
+    { region: 'YGN', location: 'အိမ်အရောက်', itemType: 'ကော်ပုံး Square', size: 'S', dimensions: '70cmx45cmx41cm', weight: '25 kg', price: 1700 },
+    { region: 'YGN', location: 'အိမ်အရောက်', itemType: 'ကော်ပုံး Square', size: 'M', dimensions: '71cmx49cmx42cm', weight: '30 kg', price: 1800 },
+    { region: 'YGN', location: 'အိမ်အရောက်', itemType: 'ကော်ပုံး Square', size: 'L', dimensions: '79cmx58cmx51cm', weight: '35 kg', price: 1900 },
+    { region: 'YGN', location: 'အိမ်အရောက်', itemType: 'ကော်ပုံး Square', size: 'XL', dimensions: '85cmx61cmx55cm', weight: '40 kg', price: 2600 },
+    
+    { region: 'YGN', location: 'အိမ်အရောက်', itemType: 'ကော်ပုံး Circle', size: 'S', dimensions: '30cmx32cm', weight: '25 kg', price: 1900 },
+    { region: 'YGN', location: 'အိမ်အရောက်', itemType: 'ကော်ပုံး Circle', size: 'M', dimensions: '58cmx60cm', weight: '30 kg', price: 2300 },
+    { region: 'YGN', location: 'အိမ်အရောက်', itemType: 'ကော်ပုံး Circle', size: 'L', dimensions: '74cmx67cm', weight: '35 kg', price: 3700 },
+    { region: 'YGN', location: 'အိမ်အရောက်', itemType: 'ကော်ပုံး Circle', size: 'XL', dimensions: '84cmx75cm', weight: '40 kg', price: 4100 },
+    
+    { region: 'YGN', location: 'အိမ်အရောက်', itemType: 'ခရီးဆောင်အိတ်', size: 'S', weight: '20 kg', price: 1600 },
+    { region: 'YGN', location: 'အိမ်အရောက်', itemType: 'ခရီးဆောင်အိတ်', size: 'M', weight: '25 kg', price: 1700 },
+    { region: 'YGN', location: 'အိမ်အရောက်', itemType: 'ခရီးဆောင်အိတ်', size: 'L', weight: '30 kg', price: 1800 },
+    
+    { region: 'YGN', location: 'အိမ်အရောက်', itemType: 'ဂျပ်ဖါ', size: 'S', weight: '25 kg', price: 1700 },
+    { region: 'YGN', location: 'အိမ်အရောက်', itemType: 'ဂျပ်ဖါ', size: 'M', weight: '30 kg', price: 1800 },
+    { region: 'YGN', location: 'အိမ်အရောက်', itemType: 'ဂျပ်ဖါ', size: 'L', weight: '35 kg', price: 1900 },
+    
+    { region: 'YGN', location: 'အိမ်အရောက်', itemType: 'ပီနံ(ဖြူ)', size: 'S', weight: '25 kg', price: 1900 },
+    { region: 'YGN', location: 'အိမ်အရောက်', itemType: 'ပီနံ(ဖြူ)', size: 'M', weight: '30 kg', price: 2300 },
+    { region: 'YGN', location: 'အိမ်အရောက်', itemType: 'ပီနံ(ဖြူ)', size: 'L', weight: '35 kg', price: 2900 },
+    { region: 'YGN', location: 'အိမ်အရောက်', itemType: 'ပီနံ(ဖြူ)', size: 'XL', weight: '40 kg', price: 3600 },
+    
+    { region: 'YGN', location: 'အိမ်အရောက်', itemType: 'ရေခဲသတ္တာ', size: '1 Door', price: 3400 },
+    { region: 'YGN', location: 'အိမ်အရောက်', itemType: 'ရေခဲသတ္တာ', size: '2 Door', price: 3700 },
+    
+    { region: 'YGN', location: 'အိမ်အရောက်', itemType: 'TV', size: '32"', price: 1900 },
+    { region: 'YGN', location: 'အိမ်အရောက်', itemType: 'TV', size: '42"', price: 2600 },
+    { region: 'YGN', location: 'အိမ်အရောက်', itemType: 'TV', size: '55"', price: 3600 },
+    { region: 'YGN', location: 'အိမ်အရောက်', itemType: 'TV', size: '60"', price: 3900 },
+
+    // YGN - မှော်ဘီ/တိုက်ကြီး/လှည်းကူး
+    { region: 'YGN', location: 'မှော်ဘီ/တိုက်ကြီး/လှည်းကူး', itemType: 'မြင်းကျားအိတ်', size: 'S', dimensions: '60cmx50cmx30cm', weight: '25 kg', price: 1800 },
+    { region: 'YGN', location: 'မှော်ဘီ/တိုက်ကြီး/လှည်းကူး', itemType: 'မြင်းကျားအိတ်', size: 'M', dimensions: '80cmx70cmx35cm', weight: '30 kg', price: 1900 },
+    { region: 'YGN', location: 'မှော်ဘီ/တိုက်ကြီး/လှည်းကူး', itemType: 'မြင်းကျားအိတ်', size: 'L', dimensions: '100cmx70cmx35cm', weight: '35 kg', price: 2000 },
+    
+    { region: 'YGN', location: 'မှော်ဘီ/တိုက်ကြီး/လှည်းကူး', itemType: 'ကော်ပုံး Square', size: 'S', dimensions: '70cmx45cmx41cm', weight: '25 kg', price: 1800 },
+    { region: 'YGN', location: 'မှော်ဘီ/တိုက်ကြီး/�ှည်းကူး', itemType: 'ကော်ပုံး Square', size: 'M', dimensions: '71cmx49cmx42cm', weight: '30 kg', price: 1900 },
+    { region: 'YGN', location: 'မှော်ဘီ/တိုက်ကြီး/လှည်းကူး', itemType: 'ကော်ပုံး Square', size: 'L', dimensions: '79cmx58cmx51cm', weight: '35 kg', price: 2000 },
+    { region: 'YGN', location: 'မှော်ဘီ/တိုက်ကြီး/�ှည်းကူး', itemType: 'ကော်ပုံး Square', size: 'XL', dimensions: '85cmx61cmx55cm', weight: '40 kg', price: 2700 },
+    
+    { region: 'YGN', location: 'မှော်ဘီ/တိုက်ကြီး/�ှည်းကူး', itemType: 'ကော်ပုံး Circle', size: 'S', dimensions: '30cmx32cm', weight: '25 kg', price: 2000 },
+    { region: 'YGN', location: 'မှော်ဘီ/တိုက်ကြီး/လှည်းကူး', itemType: 'ကော်ပုံး Circle', size: 'M', dimensions: '58cmx60cm', weight: '30 kg', price: 2400 },
+    { region: 'YGN', location: 'မှော်ဘီ/တိုက်ကြီး/လှည်းကူး', itemType: 'ကော်ပုံး Circle', size: 'L', dimensions: '74cmx67cm', weight: '35 kg', price: 3800 },
+    { region: 'YGN', location: 'မှော်ဘီ/တိုက်ကြီး/�ှည်းကူး', itemType: 'ကော်ပုံး Circle', size: 'XL', dimensions: '84cmx75cm', weight: '40 kg', price: 4200 },
+    
+    { region: 'YGN', location: 'မှော်ဘီ/တိုက်ကြီး/လှည်းကူး', itemType: 'ခရီးဆောင်အိတ်', size: 'S', weight: '20 kg', price: 1700 },
+    { region: 'YGN', location: 'မှော်ဘီ/တိုက်ကြီး/လှည်းကူး', itemType: 'ခရီးဆောင်အိတ်', size: 'M', weight: '25 kg', price: 1800 },
+    { region: 'YGN', location: 'မှော်ဘီ/တိုက်ကြီး/�ှည်းကူး', itemType: 'ခရီးဆောင်အိတ်', size: 'L', weight: '30 kg', price: 1900 },
+    
+    { region: 'YGN', location: 'မှော်ဘီ/တိုက်ကြီး/�ှည်းကူး', itemType: 'ဂျပ်ဖါ', size: 'S', weight: '25 kg', price: 1800 },
+    { region: 'YGN', location: 'မှော်ဘီ/တိုက်ကြီး/လှည်းကူး', itemType: 'ဂျပ်ဖါ', size: 'M', weight: '30 kg', price: 1900 },
+    { region: 'YGN', location: 'မှော်ဘီ/တိုက်ကြီး/လှည်းကူး', itemType: 'ဂျပ်ဖါ', size: 'L', weight: '35 kg', price: 2000 },
+    
+    { region: 'YGN', location: 'မှော်ဘီ/တိုက်ကြီး/လှည်းကူး', itemType: 'ပီနံ(ဖြူ)', size: 'S', weight: '25 kg', price: 2000 },
+    { region: 'YGN', location: 'မှော်ဘီ/တိုက်ကြီး/�ှည်းကူး', itemType: 'ပီနံ(ဖြူ)', size: 'M', weight: '30 kg', price: 2400 },
+    { region: 'YGN', location: 'မှော်ဘီ/တိုက်ကြီး/�ှည်းကူး', itemType: 'ပီနံ(ဖြူ)', size: 'L', weight: '35 kg', price: 3000 },
+    { region: 'YGN', location: 'မှော်ဘီ/တိုက်ကြီး/လှည်းကူး', itemType: 'ပီနံ(ဖြူ)', size: 'XL', weight: '40 kg', price: 3700 },
+    
+    { region: 'YGN', location: 'မှော်ဘီ/တိုက်ကြီး/လှည်းကူး', itemType: 'ရေခဲသတ္တာ', size: '1 Door', price: 3500 },
+    { region: 'YGN', location: 'မှော်ဘီ/တိုက်ကြီး/လှည်းကူး', itemType: 'ရေခဲသတ္တာ', size: '2 Door', price: 4100 },
+    
+    { region: 'YGN', location: 'မှော်ဘီ/တိုက်ကြီး/လှည်းကူး', itemType: 'TV', size: '32"', price: 2000 },
+    { region: 'YGN', location: 'မှော်ဘီ/တိုက်ကြီး/လှည်းကူး', itemType: 'TV', size: '42"', price: 2700 },
+    { region: 'YGN', location: 'မှော်ဘီ/တိုက်ကြီး/လှည်းကူး', itemType: 'TV', size: '55"', price: 3700 },
+    { region: 'YGN', location: 'မှော်ဘီ/တိုက်ကြီး/လှည်းကူး', itemType: 'TV', size: '60"', price: 4000 },
+
+    // YGN - ပဲခူးတိုင်း
+    { region: 'YGN', location: 'ပဲးခူးတိုင်း', itemType: 'မြင်းကျားအိတ်', size: 'S', dimensions: '60cmx50cmx30cm', weight: '25 kg', price: 1800 },
+    { region: 'YGN', location: 'ပဲးခူးတိုင်း', itemType: 'မြင်းကျားအိတ်', size: 'M', dimensions: '80cmx70cmx35cm', weight: '30 kg', price: 1900 },
+    { region: 'YGN', location: 'ပဲးခူးတိုင်း', itemType: 'မြင်းကျားအိတ်', size: 'L', dimensions: '100cmx70cmx35cm', weight: '35 kg', price: 2000 },
+    
+    { region: 'YGN', location: 'ပဲးခူးတိုင်း', itemType: 'ကော်ပုံး Square', size: 'S', dimensions: '70cmx45cmx41cm', weight: '25 kg', price: 1800 },
+    { region: 'YGN', location: 'ပဲးခူးတိုင်း', itemType: 'ကော်ပုံး Square', size: 'M', dimensions: '71cmx49cmx42cm', weight: '30 kg', price: 1900 },
+    { region: 'YGN', location: 'ပဲးခူးတိုင်း', itemType: 'ကော်ပုံး Square', size: 'L', dimensions: '79cmx58cmx51cm', weight: '35 kg', price: 2000 },
+    { region: 'YGN', location: 'ပဲးခူးတိုင်း', itemType: 'ကော်ပုံး Square', size: 'XL', dimensions: '85cmx61cmx55cm', weight: '40 kg', price: 2700 },
+    
+    { region: 'YGN', location: 'ပဲးခူးတိုင်း', itemType: 'ကော်ပုံး Circle', size: 'S', dimensions: '30cmx32cm', weight: '25 kg', price: 2000 },
+    { region: 'YGN', location: 'ပဲးခူးတိုင်း', itemType: 'ကော်ပုံး Circle', size: 'M', dimensions: '58cmx60cm', weight: '30 kg', price: 2400 },
+    { region: 'YGN', location: 'ပဲးခူးတိုင်း', itemType: 'ကော်ပုံး Circle', size: 'L', dimensions: '74cmx67cm', weight: '35 kg', price: 3800 },
+    { region: 'YGN', location: 'ပဲးခူးတိုင်း', itemType: 'ကော်ပုံး Circle', size: 'XL', dimensions: '84cmx75cm', weight: '40 kg', price: 4200 },
+    
+    { region: 'YGN', location: 'ပဲးခူးတိုင်း', itemType: 'ခရီးဆောင်အိတ်', size: 'S', weight: '20 kg', price: 1700 },
+    { region: 'YGN', location: 'ပဲးခူးတိုင်း', itemType: 'ခရီးဆောင်အိတ်', size: 'M', weight: '25 kg', price: 1800 },
+    { region: 'YGN', location: 'ပဲးခူးတိုင်း', itemType: 'ခရီးဆောင်အိတ်', size: 'L', weight: '30 kg', price: 1900 },
+    
+    { region: 'YGN', location: 'ပဲးခူးတိုင်း', itemType: 'ဂျပ်ဖါ', size: 'S', weight: '25 kg', price: 1800 },
+    { region: 'YGN', location: 'ပဲးခူးတိုင်း', itemType: 'ဂျပ်ဖါ', size: 'M', weight: '30 kg', price: 1900 },
+    { region: 'YGN', location: 'ပဲးခူးတိုင်း', itemType: 'ဂျပ်ဖါ', size: 'L', weight: '35 kg', price: 2000 },
+    
+    { region: 'YGN', location: 'ပဲးခူးတိုင်း', itemType: 'ပီနံ(ဖြူ)', size: 'S', weight: '25 kg', price: 2000 },
+    { region: 'YGN', location: 'ပဲးခူးတိုင်း', itemType: 'ပီနံ(ဖြူ)', size: 'M', weight: '30 kg', price: 2400 },
+    { region: 'YGN', location: 'ပဲးခူးတိုင်း', itemType: 'ပီနံ(ဖြူ)', size: 'L', weight: '35 kg', price: 3000 },
+    { region: 'YGN', location: 'ပဲးခူးတိုင်း', itemType: 'ပီနံ(ဖြူ)', size: 'XL', weight: '40 kg', price: 3700 },
+    
+    { region: 'YGN', location: 'ပဲးခူးတိုင်း', itemType: 'ရေခဲသတ္တာ', size: '1 Door', price: 3500 },
+    { region: 'YGN', location: 'ပဲးခူးတိုင်း', itemType: 'ရေခဲသတ္တာ', size: '2 Door', price: 3800 },
+    
+    { region: 'YGN', location: 'နေပြည်တော်', itemType: 'TV', size: '32"', price: 2100 },
+    { region: 'YGN', location: 'နေပြည်တော်', itemType: 'TV', size: '42"', price: 2800 },
+    { region: 'YGN', location: 'နေပြည်တော်', itemType: 'TV', size: '55"', price: 3800 },
+    { region: 'YGN', location: 'နေပြည်တော်', itemType: 'TV', size: '60"', price: 4100 },
+
+    // YGN - ရှမ်းပြည်နယ်
+    { region: 'YGN', location: 'ရှမ်းပြည်နယ်', itemType: 'မြင်းကျားအိတ်', size: 'S', dimensions: '60cmx50cmx30cm', weight: '25 kg', price: 1900 },
+    { region: 'YGN', location: 'ရှမ်းပြည်နယ်', itemType: 'မြင်းကျားအိတ်', size: 'M', dimensions: '80cmx70cmx35cm', weight: '30 kg', price: 2000 },
+    { region: 'YGN', location: 'ရှမ်းပြည်နယ်', itemType: 'မြင်းကျားအိတ်', size: 'L', dimensions: '100cmx70cmx35cm', weight: '35 kg', price: 2100 },
+    
+    { region: 'YGN', location: 'ရှမ်းပြည်နယ်', itemType: 'ကော်ပုံး Square', size: 'S', dimensions: '70cmx45cmx41cm', weight: '25 kg', price: 1900 },
+    { region: 'YGN', location: 'ရှမ်းပြည်နယ်', itemType: 'ကော်ပုံး Square', size: 'M', dimensions: '71cmx49cmx42cm', weight: '30 kg', price: 2000 },
+    { region: 'YGN', location: 'ရှမ်းပြည်နယ်', itemType: 'ကော်ပုံး Square', size: 'L', dimensions: '79cmx58cmx51cm', weight: '35 kg', price: 2100 },
+    { region: 'YGN', location: 'ရှမ်းပြည်နယ်', itemType: 'ကော်ပုံး Square', size: 'XL', dimensions: '85cmx61cmx55cm', weight: '40 kg', price: 2700 },
+    
+    { region: 'YGN', location: 'ရှမ်းပြည်နယ်', itemType: 'ကော်ပုံး Circle', size: 'S', dimensions: '30cmx32cm', weight: '25 kg', price: 2100 },
+    { region: 'YGN', location: 'ရှမ်းပြည်နယ်', itemType: 'ကော်ပုံး Circle', size: 'M', dimensions: '58cmx60cm', weight: '30 kg', price: 2500 },
+    { region: 'YGN', location: 'ရှမ်းပြည်နယ်', itemType: 'ကော်ပုံး Circle', size: 'L', dimensions: '74cmx67cm', weight: '35 kg', price: 3900 },
+    { region: 'YGN', location: 'ရှမ်းပြည်နယ်', itemType: 'ကော်ပုံး Circle', size: 'XL', dimensions: '84cmx75cm', weight: '40 kg', price: 4300 },
+    
+    { region: 'YGN', location: 'ရှမ်းပြည်နယ်', itemType: 'ခရီးဆောင်အိတ်', size: 'S', weight: '20 kg', price: 1800 },
+    { region: 'YGN', location: 'ရှမ်းပြည်နယ်', itemType: 'ခရီးဆောင်အိတ်', size: 'M', weight: '25 kg', price: 1900 },
+    { region: 'YGN', location: 'ရှမ်းပြည်နယ်', itemType: 'ခရီးဆောင်အိတ်', size: 'L', weight: '30 kg', price: 2000 },
+    
+    { region: 'YGN', location: 'ရှမ်းပြည်နယ်', itemType: 'ဂျပ်ဖါ', size: 'S', weight: '25 kg', price: 1900 },
+    { region: 'YGN', location: 'ရှမ်းပြည်နယ်', itemType: 'ဂျပ်ဖါ', size: 'M', weight: '30 kg', price: 2000 },
+    { region: 'YGN', location: 'ရှမ်းပြည်နယ်', itemType: 'ဂျပ်ဖါ', size: 'L', weight: '35 kg', price: 2100 },
+    
+    { region: 'YGN', location: 'ရှမ်းပြည်နယ်', itemType: 'ပီနံ(ဖြူ)', size: 'S', weight: '25 kg', price: 2100 },
+    { region: 'YGN', location: 'ရှမ်းပြည်နယ်', itemType: 'ပီနံ(ဖြူ)', size: 'M', weight: '30 kg', price: 2500 },
+    { region: 'YGN', location: 'ရှမ်းပြည်နယ်', itemType: 'ပီနံ(ဖြူ)', size: 'L', weight: '35 kg', price: 3100 },
+    { region: 'YGN', location: 'ရှမ်းပြည်နယ်', itemType: 'ပီနံ(ဖြူ)', size: 'XL', weight: '40 kg', price: 3800 },
+    
+    { region: 'YGN', location: 'ရှမ်းပြည်နယ်', itemType: 'ရေခဲသတ္တာ', size: '1 Door', price: 3600 },
+    { region: 'YGN', location: 'ရှမ်းပြည်နယ်', itemType: 'ရေခဲသတ္တာ', size: '2 Door', price: 3900 },
+    
+    { region: 'YGN', location: 'ရှမ်းပြည်နယ်', itemType: 'TV', size: '32"', price: 2100 },
+    { region: 'YGN', location: 'ရှမ်းပြည်နယ်', itemType: 'TV', size: '42"', price: 2800 },
+    { region: 'YGN', location: 'ရှမ်းပြည်နယ်', itemType: 'TV', size: '55"', price: 3800 },
+    { region: 'YGN', location: 'ရှမ်းပြည်နယ်', itemType: 'TV', size: '60"', price: 4100 },
             
-            { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'TV', size: '32"', price: 1800 },
-            { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'TV', size: '42"', price: 2500 },
-            { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'TV', size: '55"', price: 3500 },
-            { region: 'YGN', location: 'ရုံးထုတ်', itemType: 'TV', size: '60"', price: 3800 },
 
-            // MDY - ရုံးထုတ်
-            { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'မြင်းကျားအိတ်', size: 'S', dimensions: '60cmx50cmx30cm', weight: '25kg', price: 1850 },
-            { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'မြင်းကျားအိတ်', size: 'M', dimensions: '80cmx70cmx35cm', weight: '30kg', price: 1950 },
-            { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'မြင်းကျားအိတ်', size: 'L', dimensions: '100cmx70cmx35cm', weight: '35kg', price: 2050 },
-            
-            { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'TV', size: '32"', price: 2100 },
-            { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'TV', size: '42"', price: 2800 },
-            { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'TV', size: '55"', price: 3800 },
-            { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'TV', size: '60"', price: 4100 },
+    // YGN - မကွေးတိုင်း
+    { region: 'YGN', location: 'မကွေးတိုင်း', itemType: 'မြင်းကျားအိတ်', size: 'S', dimensions: '60cmx50cmx30cm', weight: '25 kg', price: 1900 },
+    { region: 'YGN', location: 'မကွေးတိုင်း', itemType: 'မြင်းကျားအိတ်', size: 'M', dimensions: '80cmx70cmx35cm', weight: '30 kg', price: 2000 },
+    { region: 'YGN', location: 'မကွေးတိုင်း', itemType: 'မြင်းကျားအိတ်', size: 'L', dimensions: '100cmx70cmx35cm', weight: '35 kg', price: 2100 },
+    
+    { region: 'YGN', location: 'မကွေးတိုင်း', itemType: 'ကော်ပုံး Square', size: 'S', dimensions: '70cmx45cmx41cm', weight: '25 kg', price: 1900 },
+    { region: 'YGN', location: 'မကွေးတိုင်း', itemType: 'ကော်ပုံး Square', size: 'M', dimensions: '71cmx49cmx42cm', weight: '30 kg', price: 2000 },
+    { region: 'YGN', location: 'မကွေးတိုင်း', itemType: 'ကော်ပုံး Square', size: 'L', dimensions: '79cmx58cmx51cm', weight: '35 kg', price: 2100 },
+    { region: 'YGN', location: 'မကွေးတိုင်း', itemType: 'ကော်ပုံး Square', size: 'XL', dimensions: '85cmx61cmx55cm', weight: '40 kg', price: 2700 },
+    
+    { region: 'YGN', location: 'မကွေးတိုင်း', itemType: 'ကော်ပုံး Circle', size: 'S', dimensions: '30cmx32cm', weight: '25 kg', price: 2100 },
+    { region: 'YGN', location: 'မကွေးတိုင်း', itemType: 'ကော်ပုံး Circle', size: 'M', dimensions: '58cmx60cm', weight: '30 kg', price: 2500 },
+    { region: 'YGN', location: 'မကွေးတိုင်း', itemType: 'ကော်ပုံး Circle', size: 'L', dimensions: '74cmx67cm', weight: '35 kg', price: 3900 },
+    { region: 'YGN', location: 'မကွေးတိုင်း', itemType: 'ကော်ပုံး Circle', size: 'XL', dimensions: '84cmx75cm', weight: '40 kg', price: 4300 },
+    
+    { region: 'YGN', location: 'မကွေးတိုင်း', itemType: 'ခရီးဆောင်အိတ်', size: 'S', weight: '20 kg', price: 1800 },
+    { region: 'YGN', location: 'မကွေးတိုင်း', itemType: 'ခရီးဆောင်အိတ်', size: 'M', weight: '25 kg', price: 1900 },
+    { region: 'YGN', location: 'မကွေးတိုင်း', itemType: 'ခရီးဆောင်အိတ်', size: 'L', weight: '30 kg', price: 2000 },
+    
+    { region: 'YGN', location: 'မကွေးတိုင်း', itemType: 'ဂျပ်ဖါ', size: 'S', weight: '25 kg', price: 1900 },
+    { region: 'YGN', location: 'မကွေးတိုင်း', itemType: 'ဂျပ်ဖါ', size: 'M', weight: '30 kg', price: 2000 },
+    { region: 'YGN', location: 'မကွေးတိုင်း', itemType: 'ဂျပ်ဖါ', size: 'L', weight: '35 kg', price: 2100 },
+    
+    { region: 'YGN', location: 'မကွေးတိုင်း', itemType: 'ပီနံ(ဖြူ)', size: 'S', weight: '25 kg', price: 2100 },
+    { region: 'YGN', location: 'မကွေးတိုင်း', itemType: 'ပီနံ(ဖြူ)', size: 'M', weight: '30 kg', price: 2500 },
+    { region: 'YGN', location: 'မကွေးတိုင်း', itemType: 'ပီနံ(ဖြူ)', size: 'L', weight: '35 kg', price: 3100 },
+    { region: 'YGN', location: 'မကွေးတိုင်း', itemType: 'ပီနံ(ဖြူ)', size: 'XL', weight: '40 kg', price: 3800 },
+    
+    { region: 'YGN', location: 'မကွေးတိုင်း', itemType: 'ရေခဲသတ္တာ', size: '1 Door', price: 3600 },
+    { region: 'YGN', location: 'မကွေးတိုင်း', itemType: 'ရေခဲသတ္တာ', size: '2 Door', price: 3900 },
+    
+    { region: 'YGN', location: 'မကွေးတိုင်း', itemType: 'TV', size: '32"', price: 2100 },
+    { region: 'YGN', location: 'မကွေးတိုင်း', itemType: 'TV', size: '42"', price: 2800 },
+    { region: 'YGN', location: 'မကွေးတိုင်း', itemType: 'TV', size: '55"', price: 3800 },
+    { region: 'YGN', location: 'မကွေးတိုင်း', itemType: 'TV', size: '60"', price: 4100 },
+              // YGN - ဧရာဝတီတိုင်း
+    { region: 'YGN', location: 'ဧရာဝတီတိုင်း', itemType: 'မြင်းကျားအိတ်', size: 'S', dimensions: '60cmx50cmx30cm', weight: '25 kg', price: 1900 },
+    { region: 'YGN', location: 'ဧရာဝတီတိုင်း', itemType: 'မြင်းကျားအိတ်', size: 'M', dimensions: '80cmx70cmx35cm', weight: '30 kg', price: 2000 },
+    { region: 'YGN', location: 'ဧရာဝတီတိုင်း', itemType: 'မြင်းကျားအိတ်', size: 'L', dimensions: '100cmx70cmx35cm', weight: '35 kg', price: 2100 },
+    
+    { region: 'YGN', location: 'ဧရာဝတီတိုင်း', itemType: 'ကော်ပုံး Square', size: 'S', dimensions: '70cmx45cmx41cm', weight: '25 kg', price: 1900 },
+    { region: 'YGN', location: 'ဧရာဝတီတိုင်း', itemType: 'ကော်ပုံး Square', size: 'M', dimensions: '71cmx49cmx42cm', weight: '30 kg', price: 2000 },
+    { region: 'YGN', location: 'ဧရာဝတီတိုင်း', itemType: 'ကော်ပုံး Square', size: 'L', dimensions: '79cmx58cmx51cm', weight: '35 kg', price: 2100 },
+    { region: 'YGN', location: 'ဧရာဝတီတိုင်း', itemType: 'ကော်ပုံး Square', size: 'XL', dimensions: '85cmx61cmx55cm', weight: '40 kg', price: 2700 },
+    
+    { region: 'YGN', location: 'ဧရာဝတီတိုင်း', itemType: 'ကော်ပုံး Circle', size: 'S', dimensions: '30cmx32cm', weight: '25 kg', price: 2100 },
+    { region: 'YGN', location: 'ဧရာဝတီတိုင်း', itemType: 'ကော်ပုံး Circle', size: 'M', dimensions: '58cmx60cm', weight: '30 kg', price: 2500 },
+    { region: 'YGN', location: 'ဧရာဝတီတိုင်း', itemType: 'ကော်ပုံး Circle', size: 'L', dimensions: '74cmx67cm', weight: '35 kg', price: 3900 },
+    { region: 'YGN', location: 'ဧရာဝတီတိုင်း', itemType: 'ကော်ပုံး Circle', size: 'XL', dimensions: '84cmx75cm', weight: '40 kg', price: 4300 },
+    
+    { region: 'YGN', location: 'ဧရာဝတီတိုင်း', itemType: 'ခရီးဆောင်အိတ်', size: 'S', weight: '20 kg', price: 1800 },
+    { region: 'YGN', location: 'ဧရာဝတီတိုင်း', itemType: 'ခရီးဆောင်အိတ်', size: 'M', weight: '25 kg', price: 1900 },
+    { region: 'YGN', location: 'ဧရာဝတီတိုင်း', itemType: 'ခရီးဆောင်အိတ်', size: 'L', weight: '30 kg', price: 2000 },
+    
+    { region: 'YGN', location: 'ဧရာဝတီတိုင်း', itemType: 'ဂျပ်ဖါ', size: 'S', weight: '25 kg', price: 1900 },
+    { region: 'YGN', location: 'ဧရာဝတီတိုင်း', itemType: 'ဂျပ်ဖါ', size: 'M', weight: '30 kg', price: 2000 },
+    { region: 'YGN', location: 'ဧရာဝတီတိုင်း', itemType: 'ဂျပ်ဖါ', size: 'L', weight: '35 kg', price: 2100 },
+    
+    { region: 'YGN', location: 'ဧရာဝတီတိုင်း', itemType: 'ပီနံ(ဖြူ)', size: 'S', weight: '25 kg', price: 2100 },
+    { region: 'YGN', location: 'ဧရာဝတီတိုင်း', itemType: 'ပီနံ(ဖြူ)', size: 'M', weight: '30 kg', price: 2500 },
+    { region: 'YGN', location: 'ဧရာဝတီတိုင်း', itemType: 'ပီနံ(ဖြူ)', size: 'L', weight: '35 kg', price: 3100 },
+    { region: 'YGN', location: 'ဧရာဝတီတိုင်း', itemType: 'ပီနံ(ဖြူ)', size: 'XL', weight: '40 kg', price: 3800 },
+    
+    { region: 'YGN', location: 'ဧရာဝတီတိုင်း', itemType: 'ရေခဲသတ္တာ', size: '1 Door', price: 3600 },
+    { region: 'YGN', location: 'ဧရာဝတီတိုင်း', itemType: 'ရေခဲသတ္တာ', size: '2 Door', price: 3900 },
+    
+    { region: 'YGN', location: 'ဧရာဝတီတိုင်း', itemType: 'TV', size: '32"', price: 2100 },
+    { region: 'YGN', location: 'ဧရာဝတီတိုင်း', itemType: 'TV', size: '42"', price: 2800 },
+    { region: 'YGN', location: 'ဧရာဝတီတိုင်း', itemType: 'TV', size: '55"', price: 3800 },
+    { region: 'YGN', location: 'ဧရာဝတီတိုင်း', itemType: 'TV', size: '60"', price: 4100 },
 
-            // BKK-MON Sample data
-            { region: 'BKK-MON', location: 'သထုံ/ဘီလင်း/ကျိုက်ထို', itemType: 'မြင်းကျားအိတ်', size: 'S', price: 1600 },
-            { region: 'BKK-MON', location: 'သထုံ/ဘီလင်း/ကျိုက်ထို', itemType: 'မြင်းကျားအိတ်', size: 'M', price: 1700 },
-            { region: 'BKK-MON', location: 'သထုံ/ဘီလင်း/ကျိုက်ထို', itemType: 'မြင်းကျားအိတ်', size: 'L', price: 1800 },
-            
-            // BKK-TNY Sample data
-            { region: 'BKK-TNY', location: 'ရေး-ထားဝယ်-မြိတ်', itemType: 'မြင်းကျားအိတ်', size: 'S', price: 1900 },
-            { region: 'BKK-TNY', location: 'ရေး-ထားဝယ်-မြိတ်', itemType: 'မြင်းကျားအိတ်', size: 'M', price: 2000 },
-            { region: 'BKK-TNY', location: 'ရေး-ထားဝယ်-မြိတ်', itemType: 'မြင်းကျားအိတ်', size: 'L', price: 2100 },
-        ];
+    // YGN - စစ်ကိုင်းတိုင်း
+    { region: 'YGN', location: 'စစ်ကိုင်းတိုင်း', itemType: 'မြင်းကျားအိတ်', size: 'S', dimensions: '60cmx50cmx30cm', weight: '25 kg', price: 2000 },
+    { region: 'YGN', location: 'စစ်ကိုင်းတိုင်း', itemType: 'မြင်းကျားအိတ်', size: 'M', dimensions: '80cmx70cmx35cm', weight: '30 kg', price: 2100 },
+    { region: 'YGN', location: 'စစ်ကိုင်းတိုင်း', itemType: 'မြင်းကျားအိတ်', size: 'L', dimensions: '100cmx70cmx35cm', weight: '35 kg', price: 2200 },
+    
+    { region: 'YGN', location: 'စစ်ကိုင်းတိုင်း', itemType: 'ကော်ပုံး Square', size: 'S', dimensions: '70cmx45cmx41cm', weight: '25 kg', price: 2000 },
+    { region: 'YGN', location: 'စစ်ကိုင်းတိုင်း', itemType: 'ကော်ပုံး Square', size: 'M', dimensions: '71cmx49cmx42cm', weight: '30 kg', price: 2100 },
+    { region: 'YGN', location: 'စစ်ကိုင်းတိုင်း', itemType: 'ကော်ပုံး Square', size: 'L', dimensions: '79cmx58cmx51cm', weight: '35 kg', price: 2200 },
+    { region: 'YGN', location: 'စစ်ကိုင်းတိုင်း', itemType: 'ကော်ပုံး Square', size: 'XL', dimensions: '85cmx61cmx55cm', weight: '40 kg', price: 2800 },
+    
+    { region: 'YGN', location: 'စစ်ကိုင်းတိုင်း', itemType: 'ကော်ပုံး Circle', size: 'S', dimensions: '30cmx32cm', weight: '25 kg', price: 2200 },
+    { region: 'YGN', location: 'စစ်ကိုင်းတိုင်း', itemType: 'ကော်ပုံး Circle', size: 'M', dimensions: '58cmx60cm', weight: '30 kg', price: 2600 },
+    { region: 'YGN', location: 'စစ်ကိုင်းတိုင်း', itemType: 'ကော်ပုံး Circle', size: 'L', dimensions: '74cmx67cm', weight: '35 kg', price: 4000 },
+    { region: 'YGN', location: 'စစ်ကိုင်းတိုင်း', itemType: 'ကော်ပုံး Circle', size: 'XL', dimensions: '84cmx75cm', weight: '40 kg', price: 4400 },
+    
+    { region: 'YGN', location: 'စစ်ကိုင်းတိုင်း', itemType: 'ခရီးဆောင်အိတ်', size: 'S', weight: '20 kg', price: 1900 },
+    { region: 'YGN', location: 'စစ်ကိုင်းတိုင်း', itemType: 'ခရီးဆောင်အိတ်', size: 'M', weight: '25 kg', price: 2000 },
+    { region: 'YGN', location: 'စစ်ကိုင်းတိုင်း', itemType: 'ခရီးဆောင်အိတ်', size: 'L', weight: '30 kg', price: 2100 },
+    
+    { region: 'YGN', location: 'စစ်ကိုင်းတိုင်း', itemType: 'ဂျပ်ဖါ', size: 'S', weight: '25 kg', price: 2000 },
+    { region: 'YGN', location: 'စစ်ကိုင်းတိုင်း', itemType: 'ဂျပ်ဖါ', size: 'M', weight: '30 kg', price: 2100 },
+    { region: 'YGN', location: 'စစ်ကိုင်းတိုင်း', itemType: 'ဂျပ်ဖါ', size: 'L', weight: '35 kg', price: 2200 },
+    
+    { region: 'YGN', location: 'စစ်ကိုင်းတိုင်း', itemType: 'ပီနံ(ဖြူ)', size: 'S', weight: '25 kg', price: 2200 },
+    { region: 'YGN', location: 'စစ်ကိုင်းတိုင်း', itemType: 'ပီနံ(ဖြူ)', size: 'M', weight: '30 kg', price: 2600 },
+    { region: 'YGN', location: 'စစ်ကိုင်းတိုင်း', itemType: 'ပီနံ(ဖြူ)', size: 'L', weight: '35 kg', price: 3200 },
+    { region: 'YGN', location: 'စစ်ကိုင်းတိုင်း', itemType: 'ပီနံ(ဖြူ)', size: 'XL', weight: '40 kg', price: 3900 },
+    
+    { region: 'YGN', location: 'စစ်ကိုင်းတိုင်း', itemType: 'ရေခဲသတ္တာ', size: '1 Door', price: 3700 },
+    { region: 'YGN', location: 'စစ်ကိုင်းတိုင်း', itemType: 'ရေခဲသတ္တာ', size: '2 Door', price: 4000 },
+    
+    { region: 'YGN', location: 'စစ်ကိုင်းတိုင်း', itemType: 'TV', size: '32"', price: 2200 },
+    { region: 'YGN', location: 'စစ်ကိုင်းတိုင်း', itemType: 'TV', size: '42"', price: 2900 },
+    { region: 'YGN', location: 'စစ်ကိုင်းတိုင်း', itemType: 'TV', size: '55"', price: 3900 },
+    { region: 'YGN', location: 'စစ်ကိုင်းတိုင်း', itemType: 'TV', size: '60"', price: 4200 },
 
-        // Size options for different item types
-        const sizeOptions = {
-            'မြင်းကျားအိတ်': ['S', 'M', 'L'],
-            'ကော်ပုံး Square': ['S', 'M', 'L', 'XL'],
-            'ကော်ပုံး Circle': ['S', 'M', 'L', 'XL'],
-            'ခရီးဆောင်အိတ်': ['S', 'M', 'L'],
-            'ဂျပ်ဖါ': ['S', 'M', 'L'],
-            'ပီနံ(ဖြူ)': ['S', 'M', 'L', 'XL'],
-            'ရေခဲသတ္တာ': ['1 Door', '2 Door'],
-            'TV': ['32"', '42"', '55"', '60"']
-        };
+    // YGN - မန္တလေးတိုင်း
+    { region: 'YGN', location: 'မန္တလေးတိုင်း', itemType: 'မြင်းကျားအိတ်', size: 'S', dimensions: '60cmx50cmx30cm', weight: '25 kg', price: 1850 },
+    { region: 'YGN', location: 'မန္တလေးတိုင်း', itemType: 'မြင်းကျားအိတ်', size: 'M', dimensions: '80cmx70cmx35cm', weight: '30 kg', price: 1950 },
+    { region: 'YGN', location: 'မန္တလေးတိုင်း', itemType: 'မြင်းကျားအိတ်', size: 'L', dimensions: '100cmx70cmx35cm', weight: '35 kg', price: 2050 },
+    
+    { region: 'YGN', location: 'မန္တလေးတိုင်း', itemType: 'ကော်ပုံး Square', size: 'S', dimensions: '70cmx45cmx41cm', weight: '25 kg', price: 1850 },
+    { region: 'YGN', location: 'မန္တလေးတိုင်း', itemType: 'ကော်ပုံး Square', size: 'M', dimensions: '71cmx49cmx42cm', weight: '30 kg', price: 1950 },
+    { region: 'YGN', location: 'မန္တလေးတိုင်း', itemType: 'ကော်ပုံး Square', size: 'L', dimensions: '79cmx58cmx51cm', weight: '35 kg', price: 2050 },
+    { region: 'YGN', location: 'မန္တလေးတိုင်း', itemType: 'ကော်ပုံး Square', size: 'XL', dimensions: '85cmx61cmx55cm', weight: '40 kg', price: 2700 },
+    
+    { region: 'YGN', location: 'မန္တလေးတိုင်း', itemType: 'ကော်ပုံး Circle', size: 'S', dimensions: '30cmx32cm', weight: '25 kg', price: 2050 },
+    { region: 'YGN', location: 'မန္တလေးတိုင်း', itemType: 'ကော်ပုံး Circle', size: 'M', dimensions: '58cmx60cm', weight: '30 kg', price: 2450 },
+    { region: 'YGN', location: 'မန္တလေးတိုင်း', itemType: 'ကော်ပုံး Circle', size: 'L', dimensions: '74cmx67cm', weight: '35 kg', price: 3850 },
+    { region: 'YGN', location: 'မန္တလေးတိုင်း', itemType: 'ကော်ပုံး Circle', size: 'XL', dimensions: '84cmx75cm', weight: '40 kg', price: 4300 },
+    
+    { region: 'YGN', location: 'မန္တလေးတိုင်း', itemType: 'ခရီးဆောင်အိတ်', size: 'S', weight: '20 kg', price: 1750 },
+    { region: 'YGN', location: 'မန္တလေးတိုင်း', itemType: 'ခရီးဆောင်အိတ်', size: 'M', weight: '25 kg', price: 1850 },
+    { region: 'YGN', location: 'မန္တလေးတိုင်း', itemType: 'ခရီးဆောင်အိတ်', size: 'L', weight: '30 kg', price: 1950 },
+    
+    { region: 'YGN', location: 'မန္တလေးတိုင်း', itemType: 'ဂျပ်ဖါ', size: 'S', weight: '25 kg', price: 1850 },
+    { region: 'YGN', location: 'မန္တလေးတိုင်း', itemType: 'ဂျပ်ဖါ', size: 'M', weight: '30 kg', price: 1950 },
+    { region: 'YGN', location: 'မန္တလေးတိုင်း', itemType: 'ဂျပ်ဖါ', size: 'L', weight: '35 kg', price: 2050 },
+    
+    { region: 'YGN', location: 'မန္တလေးတိုင်း', itemType: 'ပီနံ(ဖြူ)', size: 'S', weight: '25 kg', price: 2050 },
+    { region: 'YGN', location: 'မန္တလေးတိုင်း', itemType: 'ပီနံ(ဖြူ)', size: 'M', weight: '30 kg', price: 2450 },
+    { region: 'YGN', location: 'မန္တလေးတိုင်း', itemType: 'ပီနံ(ဖြူ)', size: 'L', weight: '35 kg', price: 3050 },
+    { region: 'YGN', location: 'မန္တလေးတိုင်း', itemType: 'ပီနံ(ဖြူ)', size: 'XL', weight: '40 kg', price: 3750 },
+    
+    { region: 'YGN', location: 'မန္တလေးတိုင်း', itemType: 'ရေခဲသတ္တာ', size: '1 Door', price: 3550 },
+    { region: 'YGN', location: 'မန္တလေးတိုင်း', itemType: 'ရေခဲသတ္တာ', size: '2 Door', price: 3850 },
+    
+    { region: 'YGN', location: 'မန္တလေးတိုင်း', itemType: 'TV', size: '32"', price: 2100 },
+    { region: 'YGN', location: 'မန္တလေးတိုင်း', itemType: 'TV', size: '42"', price: 2800 },
+    { region: 'YGN', location: 'မန္တလေးတိုင်း', itemType: 'TV', size: '55"', price: 3800 },
+    { region: 'YGN', location: 'မန္တလေးတိုင်း', itemType: 'TV', size: '60"', price: 4100 },
+// MDY - ရုံးထုတ်
+    { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'မြင်းကျားအိတ်', size: 'S', dimensions: '60cmx50cmx30cm', weight: '25 kg', price: 1850 },
+    { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'မြင်းကျားအိတ်', size: 'M', dimensions: '80cmx70cmx35cm', weight: '30 kg', price: 1950 },
+    { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'မြင်းကျားအိတ်', size: 'L', dimensions: '100cmx70cmx35cm', weight: '35 kg', price: 2050 },
+    
+    { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'ကော်ပုံး Square', size: 'S', dimensions: '70cmx45cmx41cm', weight: '25 kg', price: 1850 },
+    { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'ကော်ပုံး Square', size: 'M', dimensions: '71cmx49cmx42cm', weight: '30 kg', price: 1950 },
+    { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'ကော်ပုံး Square', size: 'L', dimensions: '79cmx58cmx51cm', weight: '35 kg', price: 2050 },
+    { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'ကော်ပုံး Square', size: 'XL', dimensions: '85cmx61cmx55cm', weight: '40 kg', price: 2700 },
+    
+    { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'ကော်ပုံး Circle', size: 'S', dimensions: '30cmx32cm', weight: '25 kg', price: 2050 },
+    { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'ကော်ပုံး Circle', size: 'M', dimensions: '58cmx60cm', weight: '30 kg', price: 2450 },
+    { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'ကော်ပုံး Circle', size: 'L', dimensions: '74cmx67cm', weight: '35 kg', price: 3850 },
+    { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'ကော်ပုံး Circle', size: 'XL', dimensions: '84cmx75cm', weight: '40 kg', price: 4300 },
+    
+    { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'ခရီးဆောင်အိတ်', size: 'S', weight: '20 kg', price: 1750 },
+    { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'ခရီးဆောင်အိတ်', size: 'M', weight: '25 kg', price: 1850 },
+    { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'ခရီးဆောင်အိတ်', size: 'L', weight: '30 kg', price: 1950 },
+    
+    { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'ဂျပ်ဖါ', size: 'S', weight: '25 kg', price: 1850 },
+    { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'ဂျပ်ဖါ', size: 'M', weight: '30 kg', price: 1950 },
+    { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'ဂျပ်ဖါ', size: 'L', weight: '35 kg', price: 2050 },
+    
+    { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'ပီနံ(ဖြူ)', size: 'S', weight: '25 kg', price: 2050 },
+    { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'ပီနံ(ဖြူ)', size: 'M', weight: '30 kg', price: 2450 },
+    { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'ပီနံ(ဖြူ)', size: 'L', weight: '35 kg', price: 3050 },
+    { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'ပီနံ(ဖြူ)', size: 'XL', weight: '40 kg', price: 3750 },
+    
+    { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'ရေခဲသတ္တာ', size: '1 Door', price: 3550 },
+    { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'ရေခဲသတ္တာ', size: '2 Door', price: 3850 },
+    
+    { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'TV', size: '32"', price: 2100 },
+    { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'TV', size: '42"', price: 2800 },
+    { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'TV', size: '55"', price: 3800 },
+    { region: 'MDY', location: 'ရုံးထုတ်', itemType: 'TV', size: '60"', price: 4100 },
 
+    // MDY - အိမ်အရောက်
+    { region: 'MDY', location: 'အိမ်အရောက်', itemType: 'မြင်းကျားအိတ်', size: 'S', dimensions: '60cmx50cmx30cm', weight: '25 kg', price: 1950 },
+    { region: 'MDY', location: 'အိမ်အရောက်', itemType: 'မြင်းကျားအိတ်', size: 'M', dimensions: '80cmx70cmx35cm', weight: '30 kg', price: 2050 },
+    { region: 'MDY', location: 'အိမ်အရောက်', itemType: 'မြင်းကျားအိတ်', size: 'L', dimensions: '100cmx70cmx35cm', weight: '35 kg', price: 2150 },
+    
+    { region: 'MDY', location: 'အိမ်အရောက်', itemType: 'ကော်ပုံး Square', size: 'S', dimensions: '70cmx45cmx41cm', weight: '25 kg', price: 1950 },
+    { region: 'MDY', location: 'အိမ်အရောက်', itemType: 'ကော်ပုံး Square', size: 'M', dimensions: '71cmx49cmx42cm', weight: '30 kg', price: 2050 },
+    { region: 'MDY', location: 'အိမ်အရောက်', itemType: 'ကော်ပုံး Square', size: 'L', dimensions: '79cmx58cmx51cm', weight: '35 kg', price: 2150 },
+    { region: 'MDY', location: 'အိမ်အရောက်', itemType: 'ကော်ပုံး Square', size: 'XL', dimensions: '85cmx61cmx55cm', weight: '40 kg', price: 2800 },
+    
+    { region: 'MDY', location: 'အိမ်အရောက်', itemType: 'ကော်ပုံး Circle', size: 'S', dimensions: '30cmx32cm', weight: '25 kg', price: 2150 },
+    { region: 'MDY', location: 'အိမ်အရောက်', itemType: 'ကော်ပုံး Circle', size: 'M', dimensions: '58cmx60cm', weight: '30 kg', price: 2550 },
+    { region: 'MDY', location: 'အိမ်အရောက်', itemType: 'ကော်ပုံး Circle', size: 'L', dimensions: '74cmx67cm', weight: '35 kg', price: 3950 },
+    { region: 'MDY', location: 'အိမ်အရောက်', itemType: 'ကော်ပုံး Circle', size: 'XL', dimensions: '84cmx75cm', weight: '40 kg', price: 4400 },
+    
+    { region: 'MDY', location: 'အိမ်အရောက်', itemType: 'ခရီးဆောင်အိတ်', size: 'S', weight: '20 kg', price: 1850 },
+    { region: 'MDY', location: 'အိမ်အရောက်', itemType: 'ခရီးဆောင်အိတ်', size: 'M', weight: '25 kg', price: 1950 },
+    { region: 'MDY', location: 'အိမ်အရောက်', itemType: 'ခရီးဆောင်အိတ်', size: 'L', weight: '30 kg', price: 2050 },
+    
+    { region: 'MDY', location: 'အိမ်အရောက်', itemType: 'ဂျပ်ဖါ', size: 'S', weight: '25 kg', price: 1950 },
+    { region: 'MDY', location: 'အိမ်အရောက်', itemType: 'ဂျပ်ဖါ', size: 'M', weight: '30 kg', price: 2050 },
+    { region: 'MDY', location: 'အိမ်အရောက်', itemType: 'ဂျပ်ဖါ', size: 'L', weight: '35 kg', price: 2150 },
+    
+    { region: 'MDY', location: 'အိမ်အရောက်', itemType: 'ပီနံ(ဖြူ)', size: 'S', weight: '25 kg', price: 2150 },
+    { region: 'MDY', location: 'အိမ်အရောက်', itemType: 'ပီနံ(ဖြူ)', size: 'M', weight: '30 kg', price: 2550 },
+    { region: 'MDY', location: 'အိမ်အရောက်', itemType: 'ပီနံ(ဖြူ)', size: 'L', weight: '35 kg', price: 3150 },
+    { region: 'MDY', location: 'အိမ်အရောက်', itemType: 'ပီနံ(ဖြူ)', size: 'XL', weight: '40 kg', price: 3850 },
+    
+    { region: 'MDY', location: 'အိမ်အရောက်', itemType: 'ရေခဲသတ္တာ', size: '1 Door', price: 3650 },
+    { region: 'MDY', location: 'အိမ်အရောက်', itemType: 'ရေခဲသတ္တာ', size: '2 Door', price: 3950 },
+    
+    { region: 'MDY', location: 'အိမ်အရောက်', itemType: 'TV', size: '32"', price: 2200 },
+    { region: 'MDY', location: 'အိမ်အရောက်', itemType: 'TV', size: '42"', price: 2900 },
+    { region: 'MDY', location: 'အိမ်အရောက်', itemType: 'TV', size: '55"', price: 3900 },
+    { region: 'MDY', location: 'အိမ်အရောက်', itemType: 'TV', size: '60"', price: 4200 },
+
+    // MDY - ကချင်ပြည်နယ်/မြစ်ကြီးနား
+    { region: 'MDY', location: 'ကချင်ပြည်နယ်/မြစ်ကြီးနား', itemType: 'မြင်းကျားအိတ်', size: 'S', dimensions: '60cmx50cmx30cm', weight: '25 kg', price: 3150 },
+    { region: 'MDY', location: 'ကချင်ပြည်နယ်/မြစ်ကြီးနား', itemType: 'မြင်းကျားအိတ်', size: 'M', dimensions: '80cmx70cmx35cm', weight: '30 kg', price: 3250 },
+    { region: 'MDY', location: 'ကချင်ပြည်နယ်/မြစ်ကြီးနား', itemType: 'မြင်းကျားအိတ်', size: 'L', dimensions: '100cmx70cmx35cm', weight: '35 kg', price: 3350 },
+    
+    { region: 'MDY', location: 'ကချင်ပြည်နယ်/မြစ်ကြီးနား', itemType: 'ကော်ပုံး Square', size: 'S', dimensions: '70cmx45cmx41cm', weight: '25 kg', price: 3150 },
+    { region: 'MDY', location: 'ကချင်ပြည်နယ်/မြစ်ကြီးနား', itemType: 'ကော်ပုံး Square', size: 'M', dimensions: '71cmx49cmx42cm', weight: '30 kg', price: 3250 },
+    { region: 'MDY', location: 'ကချင်ပြည်နယ်/မြစ်ကြီးနား', itemType: 'ကော်ပုံး Square', size: 'L', dimensions: '79cmx58cmx51cm', weight: '35 kg', price: 3350 },
+    { region: 'MDY', location: 'ကချင်ပြည်နယ်/မြစ်ကြီးနား', itemType: 'ကော်ပုံး Square', size: 'XL', dimensions: '85cmx61cmx55cm', weight: '40 kg', price: 4000 },
+    
+    { region: 'MDY', location: 'ကချင်ပြည်နယ်/မြစ်ကြီးနား', itemType: 'ကော်ပုံး Circle', size: 'S', dimensions: '30cmx32cm', weight: '25 kg', price: 3350 },
+    { region: 'MDY', location: 'ကချင်ပြည်နယ်/မြစ်ကြီးနား', itemType: 'ကော်ပုံး Circle', size: 'M', dimensions: '58cmx60cm', weight: '30 kg', price: 3750 },
+    { region: 'MDY', location: 'ကချင်ပြည်နယ်/မြစ်ကြီးနား', itemType: 'ကော်ပုံး Circle', size: 'L', dimensions: '74cmx67cm', weight: '35 kg', price: 5150 },
+    { region: 'MDY', location: 'ကချင်ပြည်နယ်/မြစ်ကြီးနား', itemType: 'ကော်ပုံး Circle', size: 'XL', dimensions: '84cmx75cm', weight: '40 kg', price: 5550 },
+    
+    { region: 'MDY', location: 'ကချင်ပြည်နယ်/မြစ်ကြီးနား', itemType: 'ခရီးဆောင်အိတ်', size: 'S', weight: '20 kg', price: 3050 },
+    { region: 'MDY', location: 'ကချင်ပြည်နယ်/မြစ်ကြီးနား', itemType: 'ခရီးဆောင်အိတ်', size: 'M', weight: '25 kg', price: 3150 },
+    { region: 'MDY', location: 'ကချင်ပြည်နယ်/မြစ်ကြီးနား', itemType: 'ခရီးဆောင်အိတ်', size: 'L', weight: '30 kg', price: 3250 },
+    
+    { region: 'MDY', location: 'ကချင်ပြည်နယ်/မြစ်ကြီးနား', itemType: 'ဂျပ်ဖါ', size: 'S', weight: '25 kg', price: 3150 },
+    { region: 'MDY', location: 'ကချင်ပြည်နယ်/မြစ်ကြီးနား', itemType: 'ဂျပ်ဖါ', size: 'M', weight: '30 kg', price: 3250 },
+    { region: 'MDY', location: 'ကချင်ပြည်နယ်/မြစ်ကြီးနား', itemType: 'ဂျပ်ဖါ', size: 'L', weight: '35 kg', price: 3350 },
+    
+    { region: 'MDY', location: 'ကချင်ပြည်နယ်/မြစ်ကြီးနား', itemType: 'ပီနံ(ဖြူ)', size: 'S', weight: '25 kg', price: 3350 },
+    { region: 'MDY', location: 'ကချင်ပြည်နယ်/မြစ်ကြီးနား', itemType: 'ပီနံ(ဖြူ)', size: 'M', weight: '30 kg', price: 3750 },
+    { region: 'MDY', location: 'ကချင်ပြည်နယ်/မြစ်ကြီးနား', itemType: 'ပီနံ(ဖြူ)', size: 'L', weight: '35 kg', price: 4350 },
+    { region: 'MDY', location: 'ကချင်ပြည်နယ်/မြစ်ကြီးနား', itemType: 'ပီနံ(ဖြူ)', size: 'XL', weight: '40 kg', price: 5050 },
+    
+    { region: 'MDY', location: 'ကချင်ပြည်နယ်/မြစ်ကြီးနား', itemType: 'ရေခဲသတ္တာ', size: '1 Door', price: 5050 },
+    { region: 'MDY', location: 'ကချင်ပြည်နယ်/မြစ်ကြီးနား', itemType: 'ရေခဲသတ္တာ', size: '2 Door', price: 5150 },
+    
+    { region: 'MDY', location: 'ကချင်ပြည်နယ်/မြစ်ကြီးနား', itemType: 'TV', size: '32"', price: 3100 },
+    { region: 'MDY', location: 'ကချင်ပြည်နယ်/မြစ်ကြီးနား', itemType: 'TV', size: '42"', price: 3800 },
+    { region: 'MDY', location: 'ကချင်ပြည်နယ်/မြစ်ကြီးနား', itemType: 'TV', size: '55"', price: 4800 },
+    { region: 'MDY', location: 'ကချင်ပြည်နယ်/မြစ်ကြီးနား', itemType: 'TV', size: '60"', price: 5100 }
+];
         let filteredData = [...shippingData];
 
         // DOM elements
@@ -423,3 +905,5 @@
     </script>
 </body>
 </html>
+
+    
